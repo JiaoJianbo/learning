@@ -1,0 +1,82 @@
+
+# 默认公用配置
+server:
+   port: 8080
+   context-path: /
+   
+   
+spring:
+   profiles:
+      active: dev,h2sql
+   # If your terminal supports ANSI, color output will be used to aid readability. 
+   # Color coding is configured using the %clr conversion word.
+   output:
+      ansi: 
+         enabled: DETECT
+ 
+mybatis:
+   # 实体类包，也可写作 typeAliasesPackage
+   type-aliases-package: com.bravo.demo.ssm.entity
+   # mapper映射文件的位置，也可写作 mapperLocations
+   mapper-locations: classpath:mapper/*Mapper.xml
+   
+
+#org.springframework.boot.logging.LoggingSystem: log4j2
+
+# 默认log配置方式
+#logging:
+ #  level:
+  #    root: INFO
+   #   org: 
+    #     springframework: WARN
+     # com: 
+      #   bravo: DEBUG
+
+---
+# dev 环境
+spring:
+   profiles: dev
+logging:
+   config: classpath:log4j2-spring.xml
+
+
+---
+# production 环境
+spring:
+   profiles: prod
+server:
+   port: 80
+   
+--- 
+# H2 database
+spring:
+   profiles: h2sql
+   datasource:
+      # 内存模式
+      url: jdbc:h2:mem:mydb
+      #url: jdbc:h2:file:~/.h2/mydb
+      driver-class-name: org.h2.Driver 
+      #driverClassName: org.h2.Driver
+      username: test
+      password: 111111
+      type: com.alibaba.druid.pool.DruidDataSource
+      initialSize: 2
+      maxActive: 10
+      maximumPoolSize: 10
+      maxWait: 60000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
+      # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
+      schema: classpath:database/schema.sql
+      data: classpath:database/data.sql
+   # h2 web consloe 数据库GUI管理应用
+   h2:
+      console:
+         enabled: true
+         settings: 
+            web-allow-others: true
+         path: /h2-console
+
