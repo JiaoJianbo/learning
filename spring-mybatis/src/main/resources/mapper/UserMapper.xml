@@ -9,9 +9,9 @@
 		gender, 
 		age, 
 		birthday, 
-		create_date, 
-		last_logon_time, 
-		update_date
+		create_date as "createDate", 
+		last_logon_time as "lastLogonTime", 
+		update_date as "updateDate"
 	</sql>
 
 	<select id="getAllUser" resultType="com.bravo.demo.ssm.entity.User">
@@ -19,5 +19,10 @@
 		<include refid="all_columns" />
 		from user
 	</select>
+	
+	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User">
+		insert into user (id, username, password, gender, create_date, update_date) 
+		values (#{id}, #{username}, #{passowrd}, #{gender}, now(), now());
+	</insert>
 
 </mapper>

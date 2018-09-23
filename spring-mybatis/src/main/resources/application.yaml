@@ -4,24 +4,16 @@ server:
    port: 8080
    context-path: /
    
-   
 spring:
    profiles:
       active: dev,h2sql
    # If your terminal supports ANSI, color output will be used to aid readability. 
    # Color coding is configured using the %clr conversion word.
-   output:
-      ansi: 
-         enabled: DETECT
- 
-mybatis:
-   # 实体类包，也可写作 typeAliasesPackage
-   type-aliases-package: com.bravo.demo.ssm.entity
-   # mapper映射文件的位置，也可写作 mapperLocations
-   mapper-locations: classpath:mapper/*Mapper.xml
-   
+   output.ansi.enabled: DETECT  # ALWAYS, NEVER
 
-#org.springframework.boot.logging.LoggingSystem: log4j2
+mybatis:
+   type-aliases-package: com.bravo.demo.ssm.entity   # 实体类包，也可写作 typeAliasesPackage
+   mapper-locations: classpath:mapper/*Mapper.xml    # 映射文件的位置，也可写作 mapperLocations
 
 # 默认log配置方式
 #logging:
@@ -33,7 +25,7 @@ mybatis:
       #   bravo: DEBUG
 
 ---
-# dev 环境
+# development 环境
 spring:
    profiles: dev
 logging:
@@ -70,8 +62,8 @@ spring:
       testOnReturn: false
       # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
       # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
-      schema: classpath:database/schema.sql
-      data: classpath:database/data.sql
+      schema: classpath:database/h2/schema.sql
+      data: classpath:database/h2/data.sql
    # h2 web consloe 数据库GUI管理应用
    h2:
       console:
@@ -79,4 +71,9 @@ spring:
          settings: 
             web-allow-others: true
          path: /h2-console
+
+---
+# MySQL database
+spring:
+   profiles: mysql
 

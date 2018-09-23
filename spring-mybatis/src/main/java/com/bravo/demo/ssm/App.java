@@ -9,20 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Hello world!
  *
  */
-//@SpringBootApplication (exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-@SpringBootApplication
 @Controller
 @MapperScan("com.bravo.demo.ssm.dao") //加这个注解后，DAO可以不用单独再加 @Mapper注解
+@SpringBootApplication
+//@SpringBootApplication (exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class App {
 	private static Logger log = LoggerFactory.getLogger(App.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}
-	
+
 	@RequestMapping("/")
 	public String hello() {
 		log.debug("DEBUG, visit home page ...");
