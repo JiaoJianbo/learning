@@ -4,7 +4,7 @@ create table user (
 	username varchar(100) not null,
 	password varchar(100) not null,
 	gender char, 
-	age int, 
+	age tinyint, 
 	birthday date, 
 	create_date timestamp, 
 	last_logon_time timestamp, 

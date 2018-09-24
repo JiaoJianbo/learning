@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
-		<!-- <relativePath/>lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -30,7 +30,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-				<exclusion>
+				<exclusion> <!-- 排除默认日志实现，后面引入log4j2 -->
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
@@ -56,7 +56,6 @@
 			<artifactId>druid</artifactId>
 			<version>1.1.8</version>
 		</dependency>
-		
 
 		<!-- H2 database -->
 		<dependency>
@@ -64,7 +63,6 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
 		
 		<!-- log4j2 -->
 		<dependency>
