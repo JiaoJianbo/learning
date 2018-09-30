@@ -75,6 +75,7 @@
 		<Logger name="org.eclipse.jetty" level="error" />
 		<Logger name="org.hibernate.validator.internal.util.Version" level="warn" />
 		<logger name="org.springframework.boot" level="warn"/>
+		<logger name="org.springframework.boot.autoconfigure.security" level="info"/>
 		
 		<logger name="com" level="INFO"/>
 		<logger name="com.bravo.demo" level="debug"/>

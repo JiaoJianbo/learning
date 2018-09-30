@@ -51,6 +51,7 @@ spring:
       #driverClassName: org.h2.Driver
       username: test
       password: 111111
+      #jndi-name: "java:comp/env/jdbc/testDS"
       type: com.alibaba.druid.pool.DruidDataSource
       initialSize: 2
       maxActive: 10
