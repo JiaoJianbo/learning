@@ -30,7 +30,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<exclusions>
-				<exclusion> <!-- 排除默认日志实现，后面引入log4j2 -->
+				<exclusion> <!-- 排除默认日志实现，后面会引入log4j2 -->
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
@@ -43,6 +43,12 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		-->
+		
+		<!-- Spring Boot Actuator, to enable production-ready features -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
 		<!-- spring security -->
 		<dependency>
@@ -98,6 +104,18 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>vue</artifactId>
 			<version>2.5.3</version>
+		</dependency>
+
+		<!-- React -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.webjars.npm</groupId> -->
+<!-- 			<artifactId>react</artifactId> -->
+<!-- 			<version>16.5.0</version> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>react</artifactId>
+			<version>16.4.2</version>
 		</dependency>
 
 		<!-- Bootstrap -->
