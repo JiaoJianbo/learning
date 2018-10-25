@@ -9,7 +9,7 @@ spring:
       active: dev,h2sql
    # If your terminal supports ANSI, color output will be used to aid readability. 
    # Color coding is configured using the %clr conversion word.
-   output.ansi.enabled: DETECT  # ALWAYS, NEVER
+spring.output.ansi.enabled: DETECT  # ALWAYS, NEVER
 
 mybatis:
    type-aliases-package: com.bravo.demo.ssm.entity   # 实体类包，也可写作 typeAliasesPackage
@@ -28,9 +28,27 @@ mybatis:
 # development 环境
 spring:
    profiles: dev
+   # Developer tools
+   devtools:
+      restart: 
+         enabled: true
+         exclude: /META-INF/maven/**, /META-INF/resources/**, /resources/**, /static/**, /public/**, /templates/**
+         additional-exclude: /database/**
+         #trigger-file: application.yaml
 logging:
    config: classpath:log4j2-spring.xml
-
+management:
+   security:
+      enabled: false   # actuator endpoints can be accessed without requiring authentication.
+server: 
+   tomcat:
+      basedir: D:\applog\spring-mybatis\my-tomcat
+      accesslog: # config access log
+         enabled: true
+         pattern: "%t %a %S [%r] %s (%D ms)"
+security:
+   user:
+      password: 1
 
 ---
 # production 环境
@@ -38,6 +56,9 @@ spring:
    profiles: prod
 server:
    port: 80
+logging:
+   config: classpath:log4j2-spring.xml
+   
    
 --- 
 # H2 database
