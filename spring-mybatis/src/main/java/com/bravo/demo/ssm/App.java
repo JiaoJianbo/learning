@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @MapperScan("com.bravo.demo.ssm.dao") //加这个注解后，DAO可以不用单独再加 @Mapper注解
-@SpringBootApplication
+// The @SpringBootApplication annotation is equivalent to using @Configuration, @EnableAutoConfiguration and @ComponentScan with their default attributes
+@SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
+
+// Using the exclude attribute to disable specific auto-configuration. 
+// If the class is not on the classpath, you can use the excludeName attribute of the annotation and specify the fully qualified name instead.
 //@SpringBootApplication (exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class App {
 	private static Logger log = LoggerFactory.getLogger(App.class);
@@ -29,4 +33,5 @@ public class App {
 		//return "forward:/index.html"; // forward请求，不会显示在地址栏
 		return "redirect:/index.html"; // redirect请求，会显示在地址栏
 	}
+	
 }
