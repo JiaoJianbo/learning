@@ -6,7 +6,7 @@ server:
    
 spring:
    profiles:
-      active: dev,h2sql
+      active: dev,h2sql,hikariCP
    # If your terminal supports ANSI, color output will be used to aid readability. 
    # Color coding is configured using the %clr conversion word.
 spring.output.ansi.enabled: DETECT  # ALWAYS, NEVER
@@ -65,22 +65,14 @@ logging:
 spring:
    profiles: h2sql
    datasource:
-      url: jdbc:h2:mem:mydb   # 内存模式
       #url: jdbc:h2:file:~/.h2/mydb
-      driver-class-name: org.h2.Driver 
+      url: jdbc:h2:mem:mydb   # 内存模式
       #driverClassName: org.h2.Driver
+      driver-class-name: org.h2.Driver 
       username: test
       password: 111111
       #jndi-name: "java:comp/env/jdbc/testDS"
-      type: com.alibaba.druid.pool.DruidDataSource
-      initialSize: 2
-      maxActive: 10
-      maximumPoolSize: 10
-      maxWait: 60000
-      validationQuery: SELECT 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
+      
       # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
       # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
       schema: classpath:database/h2/schema.sql
@@ -97,4 +89,38 @@ spring:
 # MySQL database
 spring:
    profiles: mysql
+
+### 切换DataSouece的时候不要忘了修改pom.xml中的dependency
+---
+# Druid DataSource
+spring:
+   profiles: druidCP
+   datasource:
+      type: com.alibaba.druid.pool.DruidDataSource   # Druid DataSource
+      initialSize: 2
+      maxActive: 10
+      maximumPoolSize: 10
+      maxWait: 60000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+
+---
+# Hikari DataSource
+spring:
+   profiles: hikariCP
+   datasource:
+      # Refer to: https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names
+      #data-source-class-name: org.h2.jdbcx.JdbcDataSource
+      type: com.zaxxer.hikari.HikariDataSource   # Hikari DataSource
+      hikari:
+         minimum-idle: 5
+         maximum-pool-size: 15
+         auto-commit: true
+         idle-timeout: 30000
+         pool-name: MyHikariCP
+         max-lifetime: 1800000
+         connection-timeout: 30000
+         connection-test-query: SELECT 1
 
