@@ -31,13 +31,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.and()
 				.formLogin()
-				//.loginPage("/login")
+//				.loginPage("/login")
+				.loginPage("/login.html") //自定义login页面
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.loginProcessingUrl("/authentication/form")
+				.defaultSuccessUrl("/")
 				.permitAll()
 			.and()
 				.logout()
-				//.logoutUrl("/logout")
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login.html") //logout成功后，返回login页面
 				.permitAll();
-		
+
+		// 暂时禁用 CSRF
+		http.csrf().disable();
 	}
 
 }
