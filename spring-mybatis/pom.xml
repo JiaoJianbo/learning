@@ -22,6 +22,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		<!-- The default version of thymeleaf is 2.1 -->
+		<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
+		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
 	</properties>
 
 	<dependencies>
@@ -55,6 +58,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+		<!-- Thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<!-- Thymeleaf的LEGACYHTML5模式需要搭配一个额外的库NekoHTML才可用 -->
+		<!-- 
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+		</dependency>
+		-->
 		
 		<!-- Developer tools, to provide additional development-time features. -->
 		<dependency>
@@ -138,7 +154,21 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.1.2</version>
 		</dependency>
+		
+		<!-- Font Awesome -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.7.0</version>
+		</dependency>
 
+
+		<!-- testing-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- Package as an executable jar -->

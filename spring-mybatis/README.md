@@ -1,4 +1,4 @@
-### SpringBoot + MyBatis + Vue.js/React.js + Bootstrap
+### SpringBoot + MyBatis + Thymeleaf + Vue.js/React.js + Bootstrap
 
 **开发环境**
 
@@ -9,3 +9,4 @@
 - mybatis-spring-boot-starter 1.3.2
 - H2 Database
 - Druid 1.1.8/HikariCP 2.5.1
+- Thymeleaf 3.0

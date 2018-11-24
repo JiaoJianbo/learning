@@ -1,0 +1,31 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Error</title>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+
+<body class="container">
+	<div class="alert alert-danger mt-1" role="alert">
+		<h3>Whitelabel Error Page，出错啦!</h3>
+	</div>
+	<div class="alert alert-dark mt-2" role="alert">
+		<div class="row">
+			<div class="col-2">
+				<img th:src="@{/images/cry.jpg}" class="rounded-circle" width="100%" alt="crying...">
+			</div>
+			<div class="col-10">
+				<p>This application has no explicit mapping for /error, so you are seeing this as a fallback.</p>
+				<div id='created'><p th:text="${timestamp}">timestamp</p></div>
+				<p th:text="'There was an unexpected error (type=' + ${error} + ', status=' + ${status} + ').'"></p> <!-- 只能双引号包单引号，反过来不行 -->
+				<!-- <p th:text="${error}">error</p> -->
+				<!-- <p th:text="${status}">status</p> -->
+				<p th:text="${message}">message</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

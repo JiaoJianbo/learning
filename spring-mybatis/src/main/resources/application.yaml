@@ -3,13 +3,29 @@
 server:
    port: 8080
    context-path: /
+   error:
+      whitelabel:
+         enabled: false # Switch the default error page off 
    
 spring:
    profiles:
       active: dev,h2sql,hikariCP
+   resources:
+      static-locations: classpath:/resources/,classpath:/templates/,classpath:/static/ # Locations of static resources
+   thymeleaf:
+      prefix: classpath:/templates/
+      suffix: .html
+      content-type: text/html
+      enabled: true
+      encoding: UTF-8
+      mode: HTML    # LEGACYHTML5 是非严格的HTML检查，但是要在pom.xml中添加额外的依赖
+      cache: false  # disabled caching when dev
+      
    # If your terminal supports ANSI, color output will be used to aid readability. 
    # Color coding is configured using the %clr conversion word.
 spring.output.ansi.enabled: DETECT  # ALWAYS, NEVER
+
+
 
 mybatis:
    type-aliases-package: com.bravo.demo.ssm.entity   # 实体类包，也可写作 typeAliasesPackage
@@ -65,13 +81,14 @@ logging:
 spring:
    profiles: h2sql
    datasource:
+      #jndi-name: "java:comp/env/jdbc/testDS"
+      
       #url: jdbc:h2:file:~/.h2/mydb
       url: jdbc:h2:mem:mydb   # 内存模式
       #driverClassName: org.h2.Driver
       driver-class-name: org.h2.Driver 
       username: test
       password: 111111
-      #jndi-name: "java:comp/env/jdbc/testDS"
       
       # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
       # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
@@ -89,6 +106,8 @@ spring:
 # MySQL database
 spring:
    profiles: mysql
+
+
 
 ### 切换DataSouece的时候不要忘了修改pom.xml中的dependency
 ---

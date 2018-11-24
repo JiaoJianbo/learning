@@ -30,8 +30,13 @@ public class App {
 	public String hello() {
 		log.debug("DEBUG, visit home page ...");
 		log.info("INFO, visit home page ...");
-		//return "forward:/index.html"; // forward请求，不会显示在地址栏
-		return "redirect:/index.html"; // redirect请求，会显示在地址栏
+		//return "forward:/home.html"; // forward请求，不会显示在地址栏
+		return "redirect:/home.html"; // redirect请求，会显示在地址栏
 	}
-	
+
+	@RequestMapping("/tologin")
+	public String toLogin() {
+		return "login"; // goto /templates/login.html
+	}
+
 }
