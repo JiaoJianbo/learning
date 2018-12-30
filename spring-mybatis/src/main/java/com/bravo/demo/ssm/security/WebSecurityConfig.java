@@ -54,6 +54,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// 暂时禁用 CSRF
 //		http.csrf().disable();
 		
+		/* 默认情况下CookieCsrfTokenRepository将编写一个名为 XSRF-TOKEN的cookie和从头部命名 X-XSRF-TOKEN中读取或HTTP参数 _csrf。
+		 * 示例显式地设置cookieHttpOnly=false. 这是必要的,允许JavaScript(例如AngularJS)读取它。
+		 * 如果你不需要使用JavaScript直接读取cookie的能力，建议省略 cookieHttpOnly=false (通过使用new CookieCsrfTokenRepository()代替) 提高安全性。
+		 */
 //		http.csrf().
 //			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
