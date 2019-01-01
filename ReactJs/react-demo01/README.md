@@ -1,18 +1,3 @@
-# 这是模拟的一个TodoList组件
-
-### 搭建环境时用到的一些命令和设置
-
-```
-npm install -g cnpm --registry=https://registry.npm.taobao.org    # install cnpm globally
-npm install -g create-react-app --registry=https://registry.npm.taobao.org
-
-cnpm config set registry https://registry.npm.taobao.org
-cnpm install -g create-react-app
-
-create-react-app react-demo01 --registry=https://registry.npm.taobao.org
-```
-
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

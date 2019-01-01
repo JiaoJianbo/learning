@@ -1,3 +1,7 @@
+@charset "UTF-8";
+/* import Antd style */
+@import '~antd/dist/antd.css';
+
 body {
   margin: 0;
   padding: 0;
