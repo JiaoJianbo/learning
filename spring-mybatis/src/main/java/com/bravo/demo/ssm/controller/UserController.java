@@ -12,7 +12,7 @@ import com.bravo.demo.ssm.service.UserService;
 
 @RestController
 @RequestMapping ("/user")
-public class HelloWorldController {
+public class UserController {
 	@Autowired
 	private UserService userService;
 	
