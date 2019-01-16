@@ -6,6 +6,10 @@ server:
    error:
       whitelabel:
          enabled: false # Switch the default error page off 
+   compression:
+      enabled: true # Response compression is enabled
+      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+      #min-response-size: 2048 # Minimum response size that is required for compression to be performed.
    
 spring:
    profiles:
@@ -19,7 +23,7 @@ spring:
       enabled: true
       encoding: UTF-8
       mode: HTML    # LEGACYHTML5 是非严格的HTML检查，但是要在pom.xml中添加额外的依赖
-      cache: false  # disabled caching when dev
+      cache: false  # Disabled caching when dev
       
    # If your terminal supports ANSI, color output will be used to aid readability. 
    # Color coding is configured using the %clr conversion word.

@@ -25,7 +25,7 @@
 	
 	<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
 		Your login attempt was not successful, please try again. <br/>
-		<!-- 错误提示信息，参考https://blog.csdn.net/sun1021873926/article/details/60332059 -->
+		<!-- 登录失败的错误提示信息，参考https://blog.csdn.net/sun1021873926/article/details/60332059 -->
 		<!-- 参考 org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter -->
 		<span th:text="'Reason: ' + ${session.SPRING_SECURITY_LAST_EXCEPTION.message}">error message</span>
 		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -41,7 +41,7 @@
 		<label for="inputPassword" class="sr-only">Password</label>
 		<input type="password" id="inputPassword" name='password' class="form-control" placeholder="Password" required>
 		
-<!-- 		<input type="hidden" name="_csrf" value="38d09eee-203b-4119-a6c0-e007847c32a4" /> -->
+		<!-- <input type="hidden" name="_csrf" value="38d09eee-203b-4119-a6c0-e007847c32a4" /> -->
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		<!-- 如果使用Ajax请求，请将token值，放入header中, 名为 X-CSRF-TOKEN或XSRF-TOKEN -->
 

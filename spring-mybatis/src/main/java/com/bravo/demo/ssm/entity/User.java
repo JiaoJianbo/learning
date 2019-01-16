@@ -102,4 +102,11 @@ public class User implements Serializable {
 	public void setUpdateDate(Timestamp updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", birthday=" + birthday + ", age=" + age + ", gender="
+				+ gender + ", lastLogonTime=" + lastLogonTime + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
+	}
 }

@@ -24,6 +24,8 @@
 		last_logon_time, 
 		update_date
 	</sql>
+	
+	
 
 	<select id="getAllUser" resultMap="userResultMap">
 		select 
@@ -31,9 +33,20 @@
 		from user
 	</select>
 	
+	<select id="getUserById" resultMap="userResultMap" parameterType="java.lang.String">
+		select 
+		<include refid="all_columns" />
+		from user
+		<where>
+			<if test="userId != null">
+				id = #{userId}
+			</if>
+		</where>
+	</select>
+	
 	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User">
-		insert into user (id, username, password, gender, create_date, update_date) 
-		values (#{id}, #{username}, #{passowrd}, #{gender}, now(), now());
+		insert into user (id, username, password, gender, age, create_date, update_date) 
+		values (#{id}, #{username}, #{passowrd}, #{gender}, #{age}, now(), now());
 	</insert>
 
 </mapper>
