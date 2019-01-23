@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -57,9 +58,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		/* 默认情况下CookieCsrfTokenRepository将编写一个名为 XSRF-TOKEN的cookie和从头部命名 X-XSRF-TOKEN中读取或HTTP参数 _csrf。
 		 * 示例显式地设置cookieHttpOnly=false. 这是必要的,允许JavaScript(例如AngularJS)读取它。
 		 * 如果你不需要使用JavaScript直接读取cookie的能力，建议省略 cookieHttpOnly=false (通过使用new CookieCsrfTokenRepository()代替) 提高安全性。
+		 * 
+		 * 将CSRF token写入cookie之后，就可以采用下面的方式使用postman测试POST, PUT, DELETE 类型的HTTP请求了。默认GET, HEAD, TRACE, OPTIONS的请求不需要CSRF token.
+		 * https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client
 		 */
 //		http.csrf().
-//			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+//			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); // CSRF token将被写入cookie，且允许客户端JavaScript从cookie中读取该值
+		http.csrf()
+			.csrfTokenRepository(new CookieCsrfTokenRepository()); // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
+		
+//		http
+//			.headers()
+//			.contentTypeOptions()
+//			.and()
+//			.xssProtection()
+//			.and()
+//			.cacheControl()
+//			.and()
+//			.httpStrictTransportSecurity()
+//			.and()
+//			.frameOptions();
 	}
 
 }

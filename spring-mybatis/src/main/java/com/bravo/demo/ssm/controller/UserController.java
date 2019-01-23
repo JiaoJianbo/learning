@@ -32,8 +32,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/list")
-	public List<User> hello() {
+	@GetMapping("/")
+	public List<User> listUsers() {
 		return userService.listAllUser();
 	}
 	
@@ -71,10 +71,12 @@ public class UserController {
 		return user;
 	}
 	
+	// 要设置请求header X-XSRF-TOKEN 和 Content-Type的值
 	@PostMapping()
-	public void addUser(@Valid @RequestBody User user) {
-		ResponseEntity re = new ResponseEntity(HttpStatus.CREATED);
-		log.debug(user.toString());
+	public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
+		log.debug("Create user {}", user.toString());
+		
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -88,7 +90,8 @@ public class UserController {
 	}
 	
 	@PutMapping("/{userId}")
-	public void updateUser(@PathVariable("userId") String userId, @RequestBody User newUser) {
+	// 使用Postman 测试时，要设置请求header X-XSRF-TOKEN={{xsrf-token}} 和 Content-Type=application/json。xsrf-token是设置的变量名
+	public void updateUser(@PathVariable("userId") String userId, @Valid @RequestBody User newUser) {
 		log.debug("Update user, id is {}, new User is {}", userId, newUser.toString());
 	}
 	
@@ -98,6 +101,5 @@ public class UserController {
 	public void updateUserViaPost(@PathVariable("userId") String userId, @RequestBody User newUser) {
 		log.debug("Update user, id is {}, new User is {}", userId, newUser.toString());
 	}
-	
 	
 }
