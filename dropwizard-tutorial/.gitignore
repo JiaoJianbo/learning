@@ -5,3 +5,6 @@
 *.log
 
 /target/
+
+# Be generated when maven package
+dependency-reduced-pom.xml

@@ -2,3 +2,7 @@ logging:
   level: INFO
   loggers:
     com.bravo.demo: DEBUG
+    
+## Below will be used in the Configuration
+template: Hello, %s!
+defaultName: Stranger

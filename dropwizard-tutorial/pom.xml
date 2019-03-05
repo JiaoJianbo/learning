@@ -41,6 +41,7 @@
 
     <build>
         <plugins>
+        	<!-- To build fat JARs -->
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.4.1</version>
@@ -81,6 +82,8 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>${mainClass}</mainClass>
+                            <!-- Versioning Your JARs -->
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
                 </configuration>
