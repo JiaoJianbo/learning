@@ -30,3 +30,11 @@ Note
 1. When a Jetty worker thread is handling an incoming HTTP request, the thread name is set to the method and URI of the request.
 1. [The user manual of Dropwizard 1.3.9](https://www.dropwizard.io/1.3.9/docs/manual/index.html#manual-index)
 
+站点
+---
+Home: [https://www.dropwizard.io](https://www.dropwizard.io)
+
+Github: [https://github.com/dropwizard/dropwizard](https://github.com/dropwizard/dropwizard)
+
+
+
