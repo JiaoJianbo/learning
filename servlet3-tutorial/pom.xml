@@ -47,6 +47,24 @@
 						<path>/servlet3</path>
 					</configuration>
 				</plugin>
+				
+				<!-- Jetty plugin, refer to: https://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
+				<!-- 使用 mvn jetty:run 命令启动  -->
+				<plugin>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>9.4.3.v20170317</version>
+					<configuration>
+						<httpConnector>
+							<port>8080</port>
+							<host>localhost</host>
+						</httpConnector>
+						<webApp>
+							<contextPath>/servlet3</contextPath>
+						</webApp>
+						<scanIntervalSeconds>5</scanIntervalSeconds>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		
