@@ -39,10 +39,8 @@ mybatis:
 #logging:
  #  level:
   #    root: INFO
-   #   org: 
-    #     springframework: WARN
-     # com: 
-      #   bravo: DEBUG
+   #   org.springframework: WARN
+    #  com.bravo: DEBUG
 
 ---
 # development 环境
