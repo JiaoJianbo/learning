@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +40,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userId}")
-	public User getUser(@PathVariable("userId") String userId) {
+	public User getUser(@PathVariable(name="userId", required = true) String userId) {
 		log.debug("Call getUser version 1.");
-		return userService.getUserById(userId);
+		User user = userService.getUserById(userId);
+		log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
+		return user;
 	}
 
 	//在request header中设置 Content-Type="application/json;version=2"
 	@GetMapping(value = "/{userId}", consumes = "application/json;version=2")
 	public User getUserV2(@PathVariable("userId") String userId) {
 		log.debug("Call getUser version 2.");
-		return userService.getUserById(userId);
+		User user = userService.getUserById(userId);
+		log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.SHORT_PREFIX_STYLE));
+		return user;
 	}
 	
 	//在request header中设置 X-API-Version=3
