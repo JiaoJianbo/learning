@@ -1,147 +1,158 @@
-
 # 默认公用配置
 server:
-   port: 8080
-   context-path: /
-   error:
-      whitelabel:
-         enabled: false # Switch the default error page off 
-   compression:
-      enabled: true # Response compression is enabled
-      mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
-      #min-response-size: 2048 # Minimum response size that is required for compression to be performed.
-   
+  port: 8080
+  #context-path: /
+  error:
+    whitelabel:
+      enabled: false # Switch the default error page off 
+  compression:
+    enabled: true # Response compression is enabled
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    #min-response-size: 2048 # Minimum response size that is required for compression to be performed.
+
 spring:
-   profiles:
-      active: dev,h2sql,hikariCP
-   resources:
-      static-locations: classpath:/resources/,classpath:/templates/,classpath:/static/ # Locations of static resources
-   thymeleaf:
-      prefix: classpath:/templates/
-      suffix: .html
-      content-type: text/html
-      enabled: true
-      encoding: UTF-8
-      mode: HTML    # LEGACYHTML5 是非严格的HTML检查，但是要在pom.xml中添加额外的依赖
-      cache: false  # Disabled caching when dev
-      
-   # If your terminal supports ANSI, color output will be used to aid readability. 
-   # Color coding is configured using the %clr conversion word.
-spring.output.ansi.enabled: DETECT  # ALWAYS, NEVER
+  profiles:
+    active: dev,h2sql,hikariCP
+  resources:
+    static-locations: classpath:/resources/,classpath:/templates/,classpath:/static/ # Locations of static resources ,classpath:/META-INF/resources/,classpath:/META-INF/resources/webjars/
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML    # LEGACYHTML5 是非严格的HTML检查，但是要在pom.xml中添加额外的依赖
+    cache: false  # Disabled caching when dev
+ 
+  # Internationalization 国际化
+  messages:
+    # always-use-message-format: false # Set whether to always apply the MessageFormat rules, parsing even messages without arguments.
+    basename: i18n/messages # Comma-separated list of basenames. 可以有多个资源文件
+    cache-seconds: -1 # Loaded resource bundle files cache expiration, in seconds. -1: cached forever.
+    encoding: UTF-8
+    fallback-to-system-locale: true # 如果没有设置 Locale，使用系统的.
 
-
+  # If your terminal supports ANSI, color output will be used to aid readability. 
+  # Color coding is configured using the %clr conversion word.
+  output:
+    ansi:
+      enabled: DETECT  # ALWAYS, NEVER
 
 mybatis:
-   type-aliases-package: com.bravo.demo.ssm.entity   # 实体类包，也可写作 typeAliasesPackage
-   mapper-locations: classpath:mapper/*Mapper.xml    # 映射文件的位置，也可写作 mapperLocations
+  type-aliases-package: com.bravo.demo.ssm.entity # 实体类包，也可写作 typeAliasesPackage
+  mapper-locations: classpath:mapper/*Mapper.xml  # 映射文件的位置，也可写作 mapperLocations
 
 # 默认log配置方式
 #logging:
- #  level:
-  #    root: INFO
-   #   org.springframework: WARN
-    #  com.bravo: DEBUG
+ # level:
+  #  root: INFO
+   # org.springframework: WARN
+    #com.bravo: DEBUG
 
 ---
 # development 环境
 spring:
-   profiles: dev
-   # Developer tools
-   devtools:
-      restart: 
-         enabled: true
-         exclude: /META-INF/maven/**, /META-INF/resources/**, /resources/**, /static/**, /public/**, /templates/**
-         additional-exclude: /database/**
-         #trigger-file: application.yaml
+  profiles: dev
+  # Developer tools
+  devtools:
+    restart: 
+      enabled: true
+      exclude: /META-INF/maven/**, /META-INF/resources/**, /resources/**, /static/**, /public/**, /templates/**
+      additional-exclude: /database/**
+      #trigger-file: application.yaml
 logging:
-   config: classpath:log4j2-spring.xml
+  config: classpath:log4j2-spring.xml
 management:
-   security:
-      enabled: false   # actuator endpoints can be accessed without requiring authentication.
-server: 
-   tomcat:
-      basedir: D:\applog\spring-mybatis\my-tomcat
-      accesslog: # config access log
-         enabled: true
-         pattern: "%t %a %S [%r] %s (%D ms)"
+  security:
+    enabled: false # actuator endpoints can be accessed without requiring authentication.
+server:
+  tomcat:
+    basedir: D:\applog\spring-mybatis\my-tomcat
+    accesslog: # config access log
+      enabled: true
+      pattern: "%t %a %S [%r] %s (%D ms)"
 security:
-   user:
-      password: 1
+  basic:
+    enabled: true
+  user:
+    name: admin
+    password: 1
 
 ---
 # production 环境
 spring:
-   profiles: prod
+  profiles: prod
 server:
-   port: 80
+  port: 80
 logging:
-   config: classpath:log4j2-spring.xml
-   
-   
+  config: classpath:log4j2-spring.xml
+
+
+### Database Profiles, 如果切换了数据库，不要忘了修改pom.xml中的dependency
 --- 
 # H2 database
 spring:
-   profiles: h2sql
-   datasource:
-      #jndi-name: "java:comp/env/jdbc/testDS"
-      
-      #url: jdbc:h2:file:~/.h2/mydb
-      url: jdbc:h2:mem:mydb   # 内存模式
-      #driverClassName: org.h2.Driver
-      driver-class-name: org.h2.Driver 
-      username: test
-      password: 111111
-      
-      # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
-      # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
-      schema: classpath:database/h2/schema.sql
-      data: classpath:database/h2/data.sql
-   # h2 web consloe 数据库GUI管理应用
-   h2:
-      console:
-         enabled: true
-         settings: 
-            web-allow-others: true
-         path: /h2-console
+  profiles: h2sql
+  datasource:
+    #jndi-name: "java:comp/env/jdbc/testDS"
+
+    #url: jdbc:h2:file:~/.h2/mydb # Embedded (local) connection。会保存持久化数据文件
+    #url: jdbc:h2:tcp://127.0.0.1/mem:mydb # Server mode (remote connections)。 这种方式必须先启动H2
+    url: jdbc:h2:mem:mydb # In-memory (named)。数据在内存中，服务启动，在内存中创建数据库，服务关闭，数据丢失
+    driver-class-name: org.h2.Driver 
+    username: test
+    password: 111111
+
+    # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
+    # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
+    schema: classpath:database/h2/schema.sql
+    data: classpath:database/h2/data.sql
+  # h2 web consloe 数据库GUI管理应用
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: true
+        web-allow-others: true
 
 ---
 # MySQL database
 spring:
-   profiles: mysql
+  profiles: mysql
 
 
-
-### 切换DataSouece的时候不要忘了修改pom.xml中的dependency
+### DataSouece Profiles, 如果DataSouece，不要忘了修改pom.xml中的dependency
 ---
 # Druid DataSource
 spring:
-   profiles: druidCP
-   datasource:
-      type: com.alibaba.druid.pool.DruidDataSource   # Druid DataSource
-      initialSize: 2
-      maxActive: 10
-      maximumPoolSize: 10
-      maxWait: 60000
-      validationQuery: SELECT 1
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
+  profiles: druidCP
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource  # Druid DataSource
+    initial-size: 2
+    max-active: 10
+    maximum-pool-size: 10
+    max-wait: 60000 # millis
+    validation-query: SELECT 1
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
 
 ---
 # Hikari DataSource
 spring:
-   profiles: hikariCP
-   datasource:
-      # Refer to: https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names
-      #data-source-class-name: org.h2.jdbcx.JdbcDataSource
-      type: com.zaxxer.hikari.HikariDataSource   # Hikari DataSource
-      hikari:
-         minimum-idle: 5
-         maximum-pool-size: 15
-         auto-commit: true
-         idle-timeout: 30000
-         pool-name: MyHikariCP
-         max-lifetime: 1800000
-         connection-timeout: 30000
-         connection-test-query: SELECT 1
+  profiles: hikariCP
+  datasource:
+    # Refer to: https://github.com/brettwooldridge/HikariCP#popular-datasource-class-names
+    #data-source-class-name: org.h2.jdbcx.JdbcDataSource
+    type: com.zaxxer.hikari.HikariDataSource # Hikari DataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 

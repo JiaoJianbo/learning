@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.bravo.demo.ssm.validator.MyConstraint;
+
 //@Entity
 public class User implements Serializable {
 	private static final long serialVersionUID = -6927279856337686228L;
@@ -12,10 +19,15 @@ public class User implements Serializable {
 //	@GeneratedValue
 	private String id;
 	
+	@NotBlank(message = "用户名不能为空")
+	@MyConstraint //自定义验证规则
 	private String username;
-	
+
+	@NotBlank
+	@Length(min = 6, max = 16)
 	private String password;
 	
+	@Past
 	private Date birthday;
 	
 	private Integer age;

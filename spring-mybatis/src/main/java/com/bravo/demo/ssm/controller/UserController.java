@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/")
+	@GetMapping()
 	public List<User> listUsers() {
 		return userService.listAllUser();
 	}
@@ -79,8 +80,14 @@ public class UserController {
 	
 	// 要设置请求header X-XSRF-TOKEN 和 Content-Type的值
 	@PostMapping()
-	public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
+	public ResponseEntity<User> addUser(@Valid @RequestBody User user, BindingResult errors) {
+		// 如果不加 BindingResult 参数的话，只要 valid 不通过，就根本不会进入到方法体
 		log.debug("Create user {}", user.toString());
+		
+		if(errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(error -> log.error(error.getDefaultMessage()));
+			// return ;
+		}
 		
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
@@ -97,15 +104,18 @@ public class UserController {
 	
 	@PutMapping("/{userId}")
 	// 使用Postman 测试时，要设置请求header X-XSRF-TOKEN={{xsrf-token}} 和 Content-Type=application/json。xsrf-token是设置的变量名
-	public void updateUser(@PathVariable("userId") String userId, @Valid @RequestBody User newUser) {
-		log.debug("Update user, id is {}, new User is {}", userId, newUser.toString());
+	public void updateUser(@Valid @RequestBody User user, BindingResult errors) {
+		log.debug("Update user, id is {}, new User is {}", user.getId(), user.toString());
+		if(errors.hasErrors()) {
+			errors.getAllErrors().stream().forEach(error -> log.error(error.getDefaultMessage()));
+		}
 	}
 	
 	//Overloaded POST
 	//或者使用名称为_method的隐藏域 <input type="hidden" name="_method" value="PUT"> 和 HiddenHttpMethodFilter
 	@PostMapping(value = "/{userId}", headers = {"X-HTTP-Method-Override=PUT"})
-	public void updateUserViaPost(@PathVariable("userId") String userId, @RequestBody User newUser) {
-		log.debug("Update user, id is {}, new User is {}", userId, newUser.toString());
+	public void updateUserViaPost(@RequestBody User user) {
+		log.debug("Update user, id is {}, new User is {}", user.getId(), user.toString());
 	}
 	
 }

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Signin</title>
+	<title th:text="#{signin}">Signin</title>
 	
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
@@ -54,11 +54,20 @@
 		<button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
 		
 		<div class="mt-3 text-muted">
-			<label>快捷登录: </label>
+			<!-- <label>快捷登录:</label> --><label th:text="#{login.sso}">快捷登录:</label>
 			<a href="https://github.com/login/oauth/authorize?client_id=XXX&redirect_uri=http%3A%2F%2Flocalhost%2Foauth%2Fgithub%2Fcallback&state=XXX" title="GitHub"><i class="fa fa-github" style="font-size:20px" aria-hidden="true"></i></a>
 			<a href="#" title="QQ"><i class="fa fa-qq" style="font-size:19px" aria-hidden="true"></i></a>
 			<a href="#" title="Wechat"><i class="fa fa-wechat" style="font-size:20px" aria-hidden="true"></i></a>
 			<a href="#" title="Weibo"><i class="fa fa-weibo" style="font-size:20px" aria-hidden="true"></i></a>
+		</div>
+		
+		<div class="mt-3 text-muted">
+			<!-- 
+			 -->
+			<a th:href="@{/login.html(language='zh_CN')}">中文</a>
+			<a th:href="@{/login.html(language='en_US')}">English</a>
+			<a href="?lang=en_US">中文</a>
+			<a href="?lang=zh_CN">English</a>
 		</div>
 		
 		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
