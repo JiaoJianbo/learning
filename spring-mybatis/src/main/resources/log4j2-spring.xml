@@ -23,7 +23,9 @@
 				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
 			</PatternLayout>
 			<!--只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
-			<ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+			<!-- <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/> -->
+			<!--只输出level级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+			<LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
 			<Policies>
 				<TimeBasedTriggeringPolicy />
 				<SizeBasedTriggeringPolicy size="10 MB" />
@@ -34,7 +36,8 @@
 			<PatternLayout>
 				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
 			</PatternLayout>
-			<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+			<!--<ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/> -->
+			<LevelRangeFilter minLevel="INFO" maxLevel="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
 			<Policies>
 				<TimeBasedTriggeringPolicy />
 				<SizeBasedTriggeringPolicy size="10 MB" />
@@ -57,7 +60,8 @@
 			<PatternLayout>
 				<Pattern>${sys:FILE_LOG_PATTERN}</Pattern>
 			</PatternLayout>
-			<ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+			<!-- <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/> -->
+			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR" onMatch="ACCEPT" onMismatch="DENY"/> 
 			<Policies>
 				<TimeBasedTriggeringPolicy />
 				<SizeBasedTriggeringPolicy size="10 MB" />
