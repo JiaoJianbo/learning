@@ -105,6 +105,7 @@ spring:
 
     # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
     # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
+    initialize: true # true: 执行下面SQL脚本初始化数据库. false：不执行脚本
     schema: classpath:database/h2/schema.sql
     data: classpath:database/h2/data.sql
   # h2 web consloe 数据库GUI管理应用

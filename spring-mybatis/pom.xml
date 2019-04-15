@@ -40,6 +40,12 @@
 			</exclusions>
 		</dependency>
 
+		<!-- 要使用AOP等功能，就要引入这个依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<!-- spring boot data jpa 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -162,6 +168,18 @@
 			<version>4.7.0</version>
 		</dependency>
 
+		<!-- Swagger 
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		-->
 
 		<!-- testing-->
 		<dependency>
