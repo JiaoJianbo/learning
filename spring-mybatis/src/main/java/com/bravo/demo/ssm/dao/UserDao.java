@@ -13,4 +13,5 @@ public interface UserDao {
 	
 	User getUserById(@Param ("userId") String userId);
 
+	User getUserByName(@Param ("username") String username);
 }

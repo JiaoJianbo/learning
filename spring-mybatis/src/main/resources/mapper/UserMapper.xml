@@ -25,7 +25,6 @@
 		update_date
 	</sql>
 	
-	
 
 	<select id="getAllUser" resultMap="userResultMap">
 		select 
@@ -44,6 +43,12 @@
 		</where>
 	</select>
 	
+	<select id="getUserByName" resultMap="userResultMap" parameterType="java.lang.String">
+		select 
+		<include refid="all_columns" />
+		from user where username = #{username}
+	</select>
+
 	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User">
 		insert into user (id, username, password, gender, age, create_date, update_date) 
 		values (#{id}, #{username}, #{passowrd}, #{gender}, #{age}, now(), now());
