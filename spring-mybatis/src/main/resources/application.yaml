@@ -157,3 +157,9 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
+# 自定义配置
+bravo:
+  security:
+#    loginUrl: /mylogin.html  不配置使用默认值
+#    loginType: JSON
+    
