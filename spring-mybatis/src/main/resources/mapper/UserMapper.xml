@@ -5,6 +5,7 @@
 		<id column="id" property="id" jdbcType="VARCHAR"/> <!-- jdbcType 参考 org.apache.ibatis.type.JdbcType -->
 		<id column="username" property="username" jdbcType="VARCHAR"/>
 		<id column="password" property="password" jdbcType="VARCHAR"/>
+		<id column="locked" property="locked" jdbcType="CHAR"/>
 		<id column="gender" property="gender" jdbcType="CHAR"/>
 		<id column="age" property="age" jdbcType="TINYINT"/>
 		<id column="birthday" property="birthday" jdbcType="DATE"/>
@@ -17,6 +18,7 @@
 		id, 
 		username, 
 		password, 
+		locked,
 		gender, 
 		age, 
 		birthday, 

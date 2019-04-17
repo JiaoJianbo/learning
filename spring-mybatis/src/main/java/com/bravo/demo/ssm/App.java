@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // Using the exclude attribute to disable specific auto-configuration. 
 // If the class is not on the classpath, you can use the excludeName attribute of the annotation and specify the fully qualified name instead.
 //@SpringBootApplication (exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+//@EnableSwagger2 //访问 swagger-ui.html
 public class App {
 	private static Logger log = LoggerFactory.getLogger(App.class);
 	
@@ -32,11 +33,6 @@ public class App {
 		log.info("INFO, visit home page ...");
 		//return "forward:/home.html"; // forward请求，不会显示在地址栏
 		return "redirect:/home.html"; // redirect请求，会显示在地址栏
-	}
-
-	@RequestMapping("/tologin")
-	public String toLogin() {
-		return "login"; // goto /templates/login.html
 	}
 
 }

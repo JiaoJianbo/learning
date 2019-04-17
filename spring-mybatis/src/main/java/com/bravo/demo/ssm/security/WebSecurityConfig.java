@@ -1,11 +1,15 @@
 package com.bravo.demo.ssm.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -13,35 +17,47 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private SecurityProperties securityProperties;
+	@Autowired
+	private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+	@Autowired
+	private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// TODO Auto-generated method stub
 		super.configure(auth);
+		// 这里不用显示的配置，Spring 可以为我们自动配置。
+		//auth.userDetailsService(new MyUserDetailsService())
+		//	.passwordEncoder(passwordEncoder());
 	}
 
 	// 在这里配置哪些页面不需要认证
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/webjars/**", "/js/**", "/css/**", "/images/**", "/**/favicon.ico");
+		web.ignoring().antMatchers("/webjars/**", "/js/**", "/css/**", "/images/**", "/**/favicon.ico"); //, "/swagger-ui.html"
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//super.configure(http);
 		
-		http.authorizeRequests()
-				.anyRequest().authenticated()
-			.and().httpBasic()
-			.and()
-				.formLogin()
+		http.formLogin()
 				.loginPage("/tologin")
 				//.loginPage("/login.html") //自定义login页面。如果写html页面，会直接跳转，不会走controller
 				.usernameParameter("username")
 				.passwordParameter("password")
 				//.failureUrl("/tologin?error") //默认就是这个
 				.loginProcessingUrl("/authentication/form") //login form 的 action 地址
-				.defaultSuccessUrl("/")
+				.successHandler(myAuthenticationSuccessHandler) //如果配置了defaultSuccessUrl，那么自定义的successHandler 不起作用
+				//.defaultSuccessUrl("/")
+				.failureHandler(myAuthenticationFailureHandler)
+			.and().authorizeRequests()
+				.antMatchers("/tologin", 
+						securityProperties.getLoginUrl()
+				)
 				.permitAll()
+				.anyRequest().authenticated()
 			.and()
 				.logout()
 				//.logoutUrl("/logout") //If CSRF protection is enabled (default), then the request must also be a POST. 所以页面上logout最好用POST请求
@@ -80,4 +96,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.frameOptions();
 	}
 
+	// 声明一个 passwordEncoder，Security 在校验密码时，就会使用该encoder对用户输入的密码加密，然后同数据库中密文进行比对
+	@Bean 
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(); //BCryptPasswordEncoder 对某个字符串每次加密的结果都是不同的，但是不影响验证
+	}
 }

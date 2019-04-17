@@ -30,6 +30,11 @@ public class User implements Serializable {
 	@Past
 	private Date birthday;
 	
+	/**
+	 * 1: Locked, 0: Unlocked
+	 */
+	private String locked;
+	
 	private Integer age;
 	
 	private String gender;
@@ -115,6 +120,14 @@ public class User implements Serializable {
 		this.updateDate = updateDate;
 	}
 	
+	public String getLocked() {
+		return locked;
+	}
+
+	public void setLocked(String locked) {
+		this.locked = locked;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", birthday=" + birthday + ", age=" + age + ", gender="
