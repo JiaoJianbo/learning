@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +41,29 @@ public class UserController {
 	public List<User> listUsers() {
 		return userService.listAllUser();
 	}
+	
+	/*
+	 * 获得当前用户信息的方法：
+	 * 1. 直接返回 SecurityContextHolder.getContext().getAuthentication();
+	 * 2.方法参数为Authentication类型，直接返回该参数
+	 * 3.如只需要 Authentication 中用户信息相关内容(Principal)，将方法参数改为 @AuthenticationPrincipal UserDetails 类型，然后直接返回该参数
+	 */
+	@GetMapping("/me")
+	/*// 方法一
+	public Object getCurrentUser() {
+		return SecurityContextHolder.getContext().getAuthentication(); //返回一个 Authentication对象
+	}
+	*/
+	/*// 方法二
+	public Object getCurrentUser(Authentication authentication) { // Spring 会自动注入
+		return authentication;
+	}
+	*/
+	// 方法三
+	public UserDetails getCurrentUser(@AuthenticationPrincipal UserDetails user) { // Spring 会自动注入
+		return user;
+	}
+	
 	
 	@GetMapping("/{userId}")
 	public User getUser(@PathVariable(name="userId", required = true) String userId) {
