@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,6 +24,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+//@Transactional
+//@Rollback(true) // 事务自动回滚，默认是true。可以不写
 public class UserControllerTest {
 	@Autowired
 	private WebApplicationContext context;
@@ -80,5 +83,18 @@ public class UserControllerTest {
 		
 		mockMvc.perform(put("/users/002").contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
 				.andExpect(status().is4xxClientError());
+	}
+	
+	@Test
+	@WithMockUser(username="admin",roles={"001","002"})
+	public void testGetCurrentUser() throws Exception {
+		String result = mockMvc.perform(get("/users/me")
+				.contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.username").value("admin"))
+			.andExpect(jsonPath("$.authorities.length()").value(2))
+			.andReturn().getResponse().getContentAsString();
+		
+		System.out.println("result = " + result);
 	}
 }
