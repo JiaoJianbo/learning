@@ -34,11 +34,11 @@
 	</div>
 	
 	<form name="loginForm" class="form-signin" action='/authentication/form' method='POST'>
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.please}">Please sign in</h1>
 
-		<label for="inputUsername" class="sr-only">Username</label>
+		<label for="inputUsername" class="sr-only" th:text="#{login.username}">Username</label>
 		<input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
-		<label for="inputPassword" class="sr-only">Password</label>
+		<label for="inputPassword" class="sr-only" th:text="#{login.password}">Password</label>
 		<input type="password" id="inputPassword" name='password' class="form-control" placeholder="Password" required>
 		
 		<!-- <input type="hidden" name="_csrf" value="38d09eee-203b-4119-a6c0-e007847c32a4" /> -->
@@ -51,7 +51,7 @@
 				Remember me
 			</label>
 		</div>
-		<button class="btn btn-primary btn-lg btn-block" type="submit">Sign in</button>
+		<button class="btn btn-primary btn-lg btn-block" type="submit" th:text="#{signin}">Sign in</button>
 		
 		<div class="mt-3 text-muted">
 			<!-- <label>快捷登录:</label> --><label th:text="#{login.sso}">快捷登录:</label>
@@ -63,11 +63,11 @@
 		
 		<div class="mt-3 text-muted">
 			<!-- 
+			<a th:href="@{/tologin(lang='zh_CN')}">中文</a>
+			<a th:href="@{/tologin(lang='en_US')}">English</a>
 			 -->
-			<a th:href="@{/login.html(language='zh_CN')}">中文</a>
-			<a th:href="@{/login.html(language='en_US')}">English</a>
-			<a href="?lang=en_US">中文</a>
-			<a href="?lang=zh_CN">English</a>
+			<a href="?lang=zh_CN">中文</a>
+			<a href="?lang=en_US">English</a>
 		</div>
 		
 		<p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
