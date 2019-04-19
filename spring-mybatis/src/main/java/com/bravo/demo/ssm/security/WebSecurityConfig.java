@@ -97,9 +97,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.csrf().
 //			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); // CSRF token将被写入cookie，且允许客户端JavaScript从cookie中读取该值
 		http.csrf()
-			.ignoringAntMatchers("/h2-console/**")
-			.csrfTokenRepository(new CookieCsrfTokenRepository()); // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
+			.csrfTokenRepository(new CookieCsrfTokenRepository()) // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
+			.ignoringAntMatchers("/h2-console/**");
 
+		http.headers()
+			.frameOptions().sameOrigin(); // 解决 in a frame because it set 'X-Frame-Options' to 'deny'问题。对同一domain的frame不检查
 	}
 
 	// 声明一个 passwordEncoder，Security 在校验密码时，就会使用该encoder对用户输入的密码加密，然后同数据库中密文进行比对
