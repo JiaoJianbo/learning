@@ -1,5 +1,7 @@
 package com.bravo.demo.ssm.security;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -23,6 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 	@Autowired
 	private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+	
+	@Autowired
+	private DataSource dataSource; //Remember-Me JdbcTokenRepositoryImpl 使用
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
+	
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -52,9 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(myAuthenticationSuccessHandler) //如果配置了defaultSuccessUrl，那么自定义的successHandler 不起作用
 				//.defaultSuccessUrl("/")
 				.failureHandler(myAuthenticationFailureHandler)
+			.and().rememberMe() // Remember-Me 功能在内存数据库模式下不起作用，因为服务重启存储在库里的token信息将丢失
+				.tokenRepository(persistentTokenRepository())
+				.tokenValiditySeconds(securityProperties.getRememberMeSeconds())
+				.userDetailsService(myUserDetailsService)
 			.and().authorizeRequests()
-				.antMatchers("/tologin", 
-						securityProperties.getLoginUrl()
+				.antMatchers(
+					"/h2-console/**",
+					"/tologin", 
+					securityProperties.getLoginUrl()
 				)
 				.permitAll()
 				.anyRequest().authenticated()
@@ -81,24 +97,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		http.csrf().
 //			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); // CSRF token将被写入cookie，且允许客户端JavaScript从cookie中读取该值
 		http.csrf()
+			.ignoringAntMatchers("/h2-console/**")
 			.csrfTokenRepository(new CookieCsrfTokenRepository()); // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
-		
-//		http
-//			.headers()
-//			.contentTypeOptions()
-//			.and()
-//			.xssProtection()
-//			.and()
-//			.cacheControl()
-//			.and()
-//			.httpStrictTransportSecurity()
-//			.and()
-//			.frameOptions();
+
 	}
 
 	// 声明一个 passwordEncoder，Security 在校验密码时，就会使用该encoder对用户输入的密码加密，然后同数据库中密文进行比对
 	@Bean 
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(); //BCryptPasswordEncoder 对某个字符串每次加密的结果都是不同的，但是不影响验证
+	}
+
+	// Remember-Me 功能在内存数据库模式下不起作用，因为服务重启存储在库里的token信息将丢失
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+		tokenRepository.setDataSource(dataSource);
+		// tokenRepository.setCreateTableOnStartup(true); 这个表我们提前创建好
+		return tokenRepository;
 	}
 }

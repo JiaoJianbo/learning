@@ -162,4 +162,4 @@ bravo:
   security:
 #    loginUrl: /mylogin.html  不配置使用默认值
 #    loginType: JSON
-    
+#    remember-me-seconds: 3600
