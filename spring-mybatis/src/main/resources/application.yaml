@@ -163,3 +163,8 @@ bravo:
 #    loginUrl: /mylogin.html  不配置使用默认值
 #    loginType: JSON
 #    remember-me-seconds: 3600
+#    captcha:
+#      width: 80
+#      height: 20
+#      size: 6
+#      target-url: /authentication/form

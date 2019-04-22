@@ -45,6 +45,13 @@
 		<!-- <input type="hidden" name="_csrf" value="38d09eee-203b-4119-a6c0-e007847c32a4" /> -->
 		<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
 		<!-- 如果使用Ajax请求，请将token值，放入header中, 名为 X-CSRF-TOKEN或XSRF-TOKEN -->
+		
+		<div class="form-group row">
+			<div class="col-sm-9">
+				<input type="text" id="captcha" name="captcha" class="form-control" placeholder="Captcha" required>
+			</div>
+			<img alt="captcha" src="/captcha/image?width=65&height=22" onclick="this.src=this.src" title="点击图片刷新" />
+		</div>
 
 		<div class="checkbox mb-2">
 			<label>

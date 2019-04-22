@@ -12,10 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.bravo.demo.ssm.security.captcha.CaptchaFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 	
+//	@Autowired
+//	private MessageSource messageSource;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,8 +56,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		//super.configure(http);
+		CaptchaFilter captchaFilter = new CaptchaFilter();
+		captchaFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+		captchaFilter.setSecurityProperties(securityProperties);
+		//改用 Spring Security 自己的国际化 
+		//captchaFilter.setMessageSource(messageSource);
+		//captchaFilter.setMyLocaleResolver(new MyLocaleResolver());
+		captchaFilter.afterPropertiesSet();
 		
-		http.formLogin()
+		http.addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class)
+			.formLogin()
 				.loginPage("/tologin")
 				//.loginPage("/login.html") //自定义login页面。如果写html页面，会直接跳转，不会走controller
 				.usernameParameter("username")
@@ -63,14 +76,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//.defaultSuccessUrl("/")
 				.failureHandler(myAuthenticationFailureHandler)
 			.and().rememberMe() // Remember-Me 功能在内存数据库模式下不起作用，因为服务重启存储在库里的token信息将丢失
-				.tokenRepository(persistentTokenRepository())
+				.tokenRepository(this.persistentTokenRepository())
 				.tokenValiditySeconds(securityProperties.getRememberMeSeconds())
 				.userDetailsService(myUserDetailsService)
 			.and().authorizeRequests()
 				.antMatchers(
 					"/h2-console/**",
 					"/tologin", 
-					securityProperties.getLoginUrl()
+					securityProperties.getLoginUrl(),
+					"/captcha/image" //图片验证码
 				)
 				.permitAll()
 				.anyRequest().authenticated()
@@ -118,4 +132,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// tokenRepository.setCreateTableOnStartup(true); 这个表我们提前创建好
 		return tokenRepository;
 	}
+	
+	// 跟上面直接 new 的不同，采用这种方式就让 Spring 容器管理bean
+//	@Bean
+//	public CaptchaFilter captchaFilter() throws ServletException {
+//		CaptchaFilter captchaFilter = new CaptchaFilter();
+//		captchaFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+//		captchaFilter.setSecurityProperties(securityProperties);
+//		captchaFilter.afterPropertiesSet();
+//		
+//		return captchaFilter;
+//	}
+	
 }
