@@ -4,7 +4,8 @@ public class CaptchaProperties {
 	
 	private int width = 60;
 	private int height = 22;
-	private int size = 4;
+	private int length = 4;
+	private int fontSize = 20;
 	private int expiredInSecond = 60;
 	
 	private String targetUrl = "";
@@ -25,12 +26,20 @@ public class CaptchaProperties {
 		this.height = height;
 	}
 
-	public int getSize() {
-		return size;
+	public int getLength() {
+		return length;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getFontSize() {
+		return fontSize;
+	}
+
+	public void setFontSize(int fontSize) {
+		this.fontSize = fontSize;
 	}
 
 	public int getExpiredInSecond() {

@@ -37,7 +37,9 @@ public class ImageCaptchaGenerator implements CaptchaGenerator {
 	public Captcha generate(ServletWebRequest request) {
 		// 在内存中创建图象
 		int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width", securityProperties.getCaptcha().getWidth()), 
-				height = ServletRequestUtils.getIntParameter(request.getRequest(), "height", securityProperties.getCaptcha().getHeight());
+			height = ServletRequestUtils.getIntParameter(request.getRequest(), "height", securityProperties.getCaptcha().getHeight()),
+			fontSize = ServletRequestUtils.getIntParameter(request.getRequest(), "fontSize", securityProperties.getCaptcha().getFontSize());
+
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		// 获取图形上下文
 		Graphics g = image.getGraphics();
@@ -47,7 +49,7 @@ public class ImageCaptchaGenerator implements CaptchaGenerator {
 		g.setColor(getRandColor(200, 250));
 		g.fillRect(0, 0, width, height);
 		// 设定字体
-		g.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		g.setFont(new Font("Times New Roman", Font.PLAIN, fontSize));
 		// 随机产生155条干扰线，使图象中的认证码不易被其它程序探测到
 		g.setColor(getRandColor(160, 200));
 		for (int i = 0; i < 155; i++) {
@@ -59,7 +61,7 @@ public class ImageCaptchaGenerator implements CaptchaGenerator {
 		}
 		// 取随机产生的认证码(6位数字)
 		String sRand = "";
-		for (int i = 0; i < securityProperties.getCaptcha().getSize(); i++) {
+		for (int i = 0; i < securityProperties.getCaptcha().getLength(); i++) {
 			String rand = String.valueOf(random.nextInt(10));
 			sRand += rand;
 			// 将认证码显示到图象中
