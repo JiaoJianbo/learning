@@ -84,7 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/h2-console/**",
 					"/tologin", 
 					securityProperties.getLoginUrl(),
-					"/captcha/image" //图片验证码
+					"/captcha/image", //图片验证码
+					"/druid/**" //DruidDataSource监控
 				)
 				.permitAll()
 				.anyRequest().authenticated()
@@ -112,7 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); // CSRF token将被写入cookie，且允许客户端JavaScript从cookie中读取该值
 		http.csrf()
 			.csrfTokenRepository(new CookieCsrfTokenRepository()) // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
-			.ignoringAntMatchers("/h2-console/**");
+			.ignoringAntMatchers("/h2-console/**", "/druid/**");
 
 		http.headers()
 			.frameOptions().sameOrigin(); // 解决 in a frame because it set 'X-Frame-Options' to 'deny'问题。对同一domain的frame不检查

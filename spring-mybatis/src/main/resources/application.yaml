@@ -51,6 +51,7 @@ mybatis:
 
 ---
 # development 环境
+debug: false # true: 可以开启AUTO-CONFIGURATION REPORT
 spring:
   profiles: dev
   # Developer tools
@@ -102,7 +103,6 @@ spring:
     driver-class-name: org.h2.Driver 
     username: test
     password: 
-
     # 进行该配置后，每次启动程序，都会运行sql文件，对数据库的结构进行操作。
     # refer to: https://www.cnblogs.com/jin-zhe/archive/2018/01/05/8203347.html
     initialize: true # true: 执行下面SQL脚本初始化数据库. false：不执行脚本
@@ -121,23 +121,39 @@ spring:
 # MySQL database
 spring:
   profiles: mysql
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_mybatis?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    initialize: true # true: 执行下面SQL脚本初始化数据库. false：不执行脚本
+    schema: classpath:database/mysql/schema.sql
+    data: classpath:database/mysql/data.sql
 
-
-### DataSouece Profiles, 如果DataSouece，不要忘了修改pom.xml中的dependency
+### DataSource Profiles, 如果DataSource改变，不要忘了修改pom.xml中的dependency
 ---
 # Druid DataSource
 spring:
-  profiles: druidCP
+  profiles: druid
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource  # Druid DataSource
-    initial-size: 2
-    max-active: 10
-    maximum-pool-size: 10
-    max-wait: 60000 # millis
-    validation-query: SELECT 1
-    test-while-idle: true
-    test-on-borrow: false
-    test-on-return: false
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 以下属性参考 com.alibaba.druid.pool.DruidDataSource 类。
+    initial-size: 5
+    #max-idle: 5  # maxIdle is deprecated
+    #maximumPoolSize: 50  # 没有这个配置
+    max-active: 30
+    maxWait: 60000 # millis
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计。wall：用于防火墙
+    filters: stat,wall
+    useGlobalDataSourceStat: true
+    connectProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 
 ---
 # Hikari DataSource
@@ -155,7 +171,7 @@ spring:
       pool-name: MyHikariCP
       max-lifetime: 1800000
       connection-timeout: 30000
-      connection-test-query: SELECT 1
+      connection-test-query: SELECT 1 FROM DUAL
 
 # 自定义配置
 bravo:
@@ -163,9 +179,9 @@ bravo:
 #    loginUrl: /mylogin.html  不配置使用默认值
 #    loginType: JSON
 #    remember-me-seconds: 3600
-    captcha:
+#    captcha:
 #      width: 80
 #      height: 20
 #      length: 6
-      font-size: 22
+#      font-size: 22
 #      target-url: /authentication/form
