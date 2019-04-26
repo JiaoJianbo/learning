@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -21,6 +22,8 @@ import com.alibaba.druid.support.http.WebStatFilter;
  * 使用 Druid 数据源时，使用该配置。
  */
 @Configuration
+//当存在配置spring.profiles.active，且其值中含有druid时该配置类生效
+@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "druid")
 public class DruidConfig {
 
 	@Bean
