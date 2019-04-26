@@ -143,6 +143,34 @@
 		</dependency>
 		-->
 		
+		<!-- Cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- JSR-107 API -->
+		<dependency>
+			<groupId>javax.cache</groupId>
+			<artifactId>cache-api</artifactId>
+		</dependency>
+		<!-- ehcache 3, 作为 JSR-107 JCache 的实现。而ehcache2可单独使用 -->
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+
+		<!-- Swagger 
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		-->
 
 		<!-- webjar-locator 包的作用是省略webjar的版本 -->
 		<dependency>
@@ -182,19 +210,6 @@
 			<artifactId>font-awesome</artifactId>
 			<version>4.7.0</version>
 		</dependency>
-
-		<!-- Swagger 
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.7.0</version>
-		</dependency>
-		-->
 
 		<!-- testing-->
 		<dependency>

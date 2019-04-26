@@ -51,9 +51,15 @@
 		from user where username = #{username}
 	</select>
 
-	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User">
+	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+			select UUID()
+		</selectKey>
 		insert into user (id, username, password, gender, age, create_date, update_date) 
-		values (#{id}, #{username}, #{passowrd}, #{gender}, #{age}, now(), now());
+		values (#{id}, #{username}, #{password}, #{gender}, #{age}, now(), now());
 	</insert>
 
+	<delete id="delUserById" parameterType="java.lang.String">
+		delete from user where id = #{userId}
+	</delete>
 </mapper>

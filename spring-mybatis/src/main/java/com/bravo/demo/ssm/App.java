@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // If the class is not on the classpath, you can use the excludeName attribute of the annotation and specify the fully qualified name instead.
 //@SpringBootApplication (exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 //@EnableSwagger2 //访问 swagger-ui.html
+@EnableCaching  // 开启缓存注解
 public class App {
 	private static Logger log = LoggerFactory.getLogger(App.class);
 	

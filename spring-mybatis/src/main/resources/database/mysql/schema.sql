@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS `user`;
 
 create table user (
-	id varchar(32) primary key,
+	id varchar(36) primary key,
 	username varchar(100) not null,
 	password varchar(100) not null,
 	locked char,

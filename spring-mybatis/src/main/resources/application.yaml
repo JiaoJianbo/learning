@@ -37,9 +37,14 @@ spring:
   output:
     ansi:
       enabled: DETECT  # ALWAYS, NEVER
+  cache:
+    jcache:
+      config: classpath:ehcache.xml #ehcache3，而ehcache2使用spring.cache.ehcache.config配置
 
 mybatis:
   type-aliases-package: com.bravo.demo.ssm.entity # 实体类包，也可写作 typeAliasesPackage
+  configuration:
+    map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*Mapper.xml  # 映射文件的位置，也可写作 mapperLocations
 
 # 默认log配置方式

@@ -69,7 +69,8 @@ public class UserController {
 	public User getUser(@PathVariable(name="userId", required = true) String userId) {
 		log.debug("Call getUser version 1.");
 		User user = userService.getUserById(userId);
-		log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
+		//log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
+		log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.DEFAULT_STYLE));
 		return user;
 	}
 
@@ -103,6 +104,14 @@ public class UserController {
 		return user;
 	}
 	
+	@GetMapping("/username/{username}")
+	public User getUserByName(@PathVariable(name="username", required = true) String username) {
+		log.debug("Call getUserByName.");
+		User user = userService.getUserByName(username);
+		log.debug(ReflectionToStringBuilder.toString(user, ToStringStyle.DEFAULT_STYLE));
+		return user;
+	}
+	
 	// 要设置请求header X-XSRF-TOKEN 和 Content-Type的值
 	@PostMapping()
 	public ResponseEntity<User> addUser(@Valid @RequestBody User user, BindingResult errors) {
@@ -113,18 +122,23 @@ public class UserController {
 			errors.getAllErrors().stream().forEach(error -> log.error(error.getDefaultMessage()));
 			// return ;
 		}
-		
+		userService.createUser(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public void addUser(@RequestParam("username") String username, @RequestParam("password") String password) {
 		log.debug("create user [username={}, password={}]", username, password);
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		userService.createUser(user);
 	}
 	
 	@DeleteMapping("/{userId}")
-	public void deleteUser(@PathVariable("userId") String userId) {
+	public int deleteUser(@PathVariable("userId") String userId) {
 		log.debug("Delete user, id is {}", userId);
+		return userService.delByUserId(userId);
 	}
 	
 	@PutMapping("/{userId}")

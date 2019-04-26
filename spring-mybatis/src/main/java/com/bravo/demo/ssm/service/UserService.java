@@ -12,4 +12,8 @@ public interface UserService {
 	User getUserById(String userId);
 
 	User getUserByName(String username);
+	
+	String createUser(User user);
+	
+	int delByUserId(String userId);
 }

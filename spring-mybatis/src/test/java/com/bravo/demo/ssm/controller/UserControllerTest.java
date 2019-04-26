@@ -1,5 +1,6 @@
 package com.bravo.demo.ssm.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -86,7 +87,7 @@ public class UserControllerTest {
 	}
 	
 	@Test
-	@WithMockUser(username="admin",roles={"001","002"})
+	@WithMockUser(username="admin",roles={"001","002"}) //模拟当前登录用户为admin，角色为 001,002
 	public void testGetCurrentUser() throws Exception {
 		String result = mockMvc.perform(get("/users/me")
 				.contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -96,5 +97,14 @@ public class UserControllerTest {
 			.andReturn().getResponse().getContentAsString();
 		
 		System.out.println("result = " + result);
+	}
+	
+	@Test 
+	public void testDeleteuser() throws Exception {
+		String result = mockMvc.perform(delete("/users/002")
+				.contentType(MediaType.APPLICATION_JSON_UTF8))
+			.andExpect(status().isOk())
+			.andReturn().getResponse().getContentAsString();
+	System.out.println("result = " + result);
 	}
 }
