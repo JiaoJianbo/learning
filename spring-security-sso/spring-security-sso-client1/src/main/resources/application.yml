@@ -1,0 +1,17 @@
+server:
+  port: 8081
+  context-path: /client1
+
+oauth2-server-uri: http://127.0.0.1:8888/server   # 自定义配置
+
+security:
+  oauth2:
+    client:
+      client-id: client1
+      client-secret: secret1
+      user-authorization-uri: ${oauth2-server-uri}/oauth/authorize  # 认证服务地址
+      access-token-uri: ${oauth2-server-uri}/oauth/token  # 请求token地址
+    resource:
+      jwt:
+        key-uri: ${oauth2-server-uri}/oauth/token_key   # 请求签名token的key的地址
+  enable-csrf: false

@@ -1,0 +1,13 @@
+server:
+  port: 8888
+  context-path: /server
+
+security:
+  user:
+    password: 1
+
+logging:
+  level:
+    root: info
+    org:
+      springframework.security: debug
