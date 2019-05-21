@@ -1,4 +1,4 @@
-package com.bravo.interview.jvm;
+package com.bravo.interview.jvm.oom;
 
 import java.nio.ByteBuffer;
 

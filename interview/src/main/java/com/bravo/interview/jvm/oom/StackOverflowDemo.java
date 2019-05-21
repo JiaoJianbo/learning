@@ -1,4 +1,4 @@
-package com.bravo.interview.jvm;
+package com.bravo.interview.jvm.oom;
 
 import java.util.concurrent.TimeUnit;
 
@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
  * Java虚拟机栈（即我们常说的栈）大小用 -Xss512K 大小设置（等同于 -XX:ThreadStackSize=512K），
  * 大小通常在 512K ~ 1024K。可以使用 jinfo -flag ThreadStackSize [Java进程ID] 查看某个Java进程的栈大小。
  * -XX:ThreadStackSize=0，代表使用系统默认值。
+ *
+ * 故障现象：
+ * Exception in thread "main" java.lang.StackOverflowError
  * </p>
  */
 public class StackOverflowDemo {

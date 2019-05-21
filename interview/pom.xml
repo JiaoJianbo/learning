@@ -8,8 +8,15 @@
     <artifactId>java-interview</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <build>
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+    </dependencies>
 
+    <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
