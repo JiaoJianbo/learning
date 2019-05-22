@@ -2,11 +2,14 @@
 主要是Java面试中的一些核心的、难点的知识总结。
 
 重点包括以下内容：
-* J.U.C
+* JUC
   * Volatile
   * Atomic 操作
   * 线程安全的容器
   * 锁（Lock）
+  * CountDownLatch / CyclicBarrier / Semaphore
+  * BlockQueue
+  * ThreadPoolExecutor
 
 * JVM
   * JVM 参数设置
