@@ -17,7 +17,7 @@ import com.bravo.demo.ssm.entity.User;
 import com.bravo.demo.ssm.service.UserService;
 
 @Service ("userService")
-@CacheConfig(cacheNames = "user")
+@CacheConfig(cacheNames = "user") // 默认使用ConcurrentMapCache
 public class UserServiceImpl implements UserService {
 	private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
