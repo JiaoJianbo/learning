@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component("myAuthenticationFailureHandler")
 public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	@Autowired //系统启动时已经自动注入了一个 ObjectMapper
-	private ObjectMapper ojectMapper;
+	private ObjectMapper objectMapper;
 	@Autowired
 	private SecurityProperties securityProperties;
 	
@@ -29,7 +29,7 @@ public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
 		if(securityProperties.getLoginType() == LoginType.JSON) {
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			response.getWriter().write(ojectMapper.writeValueAsString(exception.getLocalizedMessage()));
+			response.getWriter().write(objectMapper.writeValueAsString(exception.getLocalizedMessage()));
 		}else {
 			// 如果不设置，会跳到默认的 Whitelabel Error Page
 			super.setDefaultFailureUrl("/tologin?error");

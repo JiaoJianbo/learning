@@ -26,19 +26,19 @@ public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
 	private static Logger logger = LoggerFactory.getLogger(MyAuthenticationSuccessHandler.class);
 	
 	@Autowired //系统启动时已经自动注入了一个 ObjectMapper
-	private ObjectMapper ojectMapper;
+	private ObjectMapper objectMapper;
 	@Autowired
 	private SecurityProperties securityProperties;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		logger.debug("Authentication === {}", ojectMapper.writeValueAsString(authentication));
+		logger.debug("Authentication === {}", objectMapper.writeValueAsString(authentication));
 		
 		if(securityProperties.getLoginType() == LoginType.JSON) {
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 			response.setStatus(HttpStatus.OK.value());
-			response.getWriter().write(ojectMapper.writeValueAsString(authentication));
+			response.getWriter().write(objectMapper.writeValueAsString(authentication));
 		} else {
 			super.onAuthenticationSuccess(request, response, authentication);
 		}
