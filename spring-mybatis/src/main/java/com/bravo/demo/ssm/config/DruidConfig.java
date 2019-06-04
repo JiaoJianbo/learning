@@ -23,7 +23,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
  */
 @Configuration
 //当存在配置spring.profiles.active，且其值中含有druid时该配置类生效
-@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "druid")
+@ConditionalOnProperty(value = "spring.profiles.active", havingValue = "druid")
 public class DruidConfig {
 
 	@Bean
