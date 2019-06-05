@@ -9,6 +9,8 @@ server:
     enabled: true # Response compression is enabled
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
     #min-response-size: 2048 # Minimum response size that is required for compression to be performed.
+  session:
+    timeout: 100 # 单位：秒，默认的Tomcat容器中session最短时间是1分钟, 见 TomcatEmbeddedServletContainerFactory
 
 spring:
   profiles:
@@ -40,6 +42,9 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml #ehcache3，而ehcache2使用spring.cache.ehcache.config配置
+  session: # Spring session
+    store-type: none # REDIS, MONGO, JDBC, HAZELCAST, HASH_MAP, NONE. Session持久化的方式，集群部署下方便session管理。
+    
 
 mybatis:
   type-aliases-package: com.bravo.demo.ssm.entity # 实体类包，也可写作 typeAliasesPackage
@@ -66,11 +71,16 @@ spring:
       exclude: /META-INF/maven/**, /META-INF/resources/**, /resources/**, /static/**, /public/**, /templates/**
       additional-exclude: /database/**
       #trigger-file: application.yaml
+  redis:
+    host: localhost
+    port: 6379
 logging:
   config: classpath:log4j2-spring.xml
 management:
   security:
     enabled: false # actuator endpoints can be accessed without requiring authentication.
+  context-path: /management
+  port: 8081
 server:
   tomcat:
     basedir: D:\applog\spring-mybatis\my-tomcat
@@ -190,3 +200,6 @@ bravo:
 #      length: 6
 #      font-size: 22
 #      target-url: /authentication/form
+#    max-sessions-prevents-login: true
+    
+

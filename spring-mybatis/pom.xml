@@ -142,8 +142,22 @@
 			<artifactId>log4j-core</artifactId>
 		</dependency>
 		-->
-		
+
 		<!-- Cache -->
+		<!-- 
+			Spring Boot 按照如下顺序检测缓存配置，越往下优先级越低。如，下面如果先使用 JCache (EhCache 3)，那么 Redis 缓存将不起作用。
+			当没有配置具体缓存时，默认使用 Simple，即使用 ConcurrentMapCache。
+			• Generic
+			• JCache (JSR-107) (EhCache 3, Hazelcast, Infinispan, etc)
+			• EhCache
+			• Hazelcast
+			• Infinispan
+			• Couchbas
+			• Redis
+			• Caffeine
+			• Guava (dedeprecated)
+			• Simple
+		 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
@@ -153,10 +167,22 @@
 			<groupId>javax.cache</groupId>
 			<artifactId>cache-api</artifactId>
 		</dependency>
-		<!-- ehcache 3, 作为 JSR-107 JCache 的实现。而ehcache2可单独使用 -->
+		<!-- EhCache 3, 作为 JSR-107 JCache 的实现。而ehcache2可单独使用 -->
 		<dependency>
 			<groupId>org.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
+		</dependency>
+
+		<!-- Redis，自动引入 RedisTemplate和 StringRedisTemplate -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		
+		<!-- session management -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session</artifactId>
 		</dependency>
 
 		<!-- Swagger 

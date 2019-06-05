@@ -3,6 +3,7 @@ package com.bravo.demo.ssm.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,12 +14,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bravo.demo.ssm.security.captcha.CaptchaFilter;
+import com.bravo.demo.ssm.security.session.MyInvalidSessionStrategy;
+import com.bravo.demo.ssm.security.session.MySessionInformationExpiredStrategy;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +41,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource; //Remember-Me JdbcTokenRepositoryImpl 使用
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
+	@Autowired
+	private InvalidSessionStrategy invalidSessionStrategy;
+	@Autowired
+	private SessionInformationExpiredStrategy expiredSessionStrategy;
+	
+	@Autowired
+	private LogoutSuccessHandler logoutSuccessHandler;
 	
 //	@Autowired
 //	private MessageSource messageSource;
@@ -79,28 +92,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.tokenRepository(this.persistentTokenRepository())
 				.tokenValiditySeconds(securityProperties.getRememberMeSeconds())
 				.userDetailsService(myUserDetailsService)
+			.and().sessionManagement()
+				.invalidSessionUrl(securityProperties.getInvalidSessionUrl()) // session 失效跳转到URL
+				//.invalidSessionStrategy(invalidSessionStrategy) // Session 超时。每次登录时和 logout之后都会执行invalidSessionStrategy??
+				.maximumSessions(securityProperties.getMaxSessions()) // 最大session并发数
+				.maxSessionsPreventsLogin(securityProperties.isMaxSessionsPreventsLogin()) // 超过最大并发session数后,是否阻止最新登录
+				.expiredSessionStrategy(expiredSessionStrategy) // Session 失效
+				.and()
 			.and().authorizeRequests()
 				.antMatchers(
 					"/h2-console/**",
 					"/tologin", 
+					"/login.html",
 					securityProperties.getLoginUrl(),
 					"/captcha/image", //图片验证码
-					"/druid/**" //DruidDataSource监控
+					"/druid/**", //DruidDataSource监控
+					securityProperties.getInvalidSessionUrl(),
+					securityProperties.getExpiredSessionUrl(),
+					"/tologin?logout",
+					securityProperties.getLogoutUrl()
 				)
 				.permitAll()
 				.anyRequest().authenticated()
-			.and()
-				.logout()
+			.and().logout()
 				//.logoutUrl("/logout") //If CSRF protection is enabled (default), then the request must also be a POST. 所以页面上logout最好用POST请求
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) //get方式 logout
 				.invalidateHttpSession(true)
-				.logoutSuccessUrl("/tologin?logout") //logout成功后，返回login页面. The default is /login?logout. This will setup the SimpleUrlLogoutSuccessHandler under the covers.
-				//.addLogoutHandler(logoutHandler) //If this is specified, logoutSuccessUrl(String) is ignored.
+				//.logoutSuccessUrl("/tologin?logout") //logout成功后，返回login页面. The default is /login?logout. This will setup the SimpleUrlLogoutSuccessHandler under the covers.
+				.logoutSuccessHandler(logoutSuccessHandler) //If this is specified, logoutSuccessUrl(String) is ignored.
+				//.addLogoutHandler(logoutHandler) //Adds a LogoutHandler. The SecurityContextLogoutHandler is added as the last LogoutHandler by default.
 				//.deleteCookies(cookieNamesToClear) //This is a shortcut for adding a CookieClearingLogoutHandler explicitly.
 				.permitAll();
-
-		// 暂时禁用 CSRF
-//		http.csrf().disable();
 		
 		/* 默认情况下CookieCsrfTokenRepository将编写一个名为 XSRF-TOKEN的cookie和从头部命名 X-XSRF-TOKEN中读取或HTTP参数 _csrf。
 		 * 示例显式地设置cookieHttpOnly=false. 这是必要的,允许JavaScript(例如AngularJS)读取它。
@@ -114,7 +136,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf()
 			.csrfTokenRepository(new CookieCsrfTokenRepository()) // CSRF token将被写入cookie. 客户端JavaScript不能从cookie中读取该值
 			.ignoringAntMatchers("/h2-console/**", "/druid/**");
-
+		// 暂时禁用 CSRF
+//		http.csrf().disable();
+		
 		http.headers()
 			.frameOptions().sameOrigin(); // 解决 in a frame because it set 'X-Frame-Options' to 'deny'问题。对同一domain的frame不检查
 	}
@@ -145,4 +169,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		return captchaFilter;
 //	}
 	
+	
+	@Bean
+	@ConditionalOnMissingBean(InvalidSessionStrategy.class)
+	public InvalidSessionStrategy invalidSessionStrategy() {
+		return new MyInvalidSessionStrategy(securityProperties.getInvalidSessionUrl(), securityProperties.getLoginType());
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean(SessionInformationExpiredStrategy.class)
+	public SessionInformationExpiredStrategy sessionInformationExpiredStrategy() {
+		return new MySessionInformationExpiredStrategy(securityProperties.getExpiredSessionUrl(), securityProperties.getLoginType());
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean(LogoutSuccessHandler.class)
+	public LogoutSuccessHandler logoutSuccessHandler() {
+		return new MyLogoutSuccessHandler(securityProperties.getLogoutUrl(), securityProperties.getLoginType());
+	}
 }

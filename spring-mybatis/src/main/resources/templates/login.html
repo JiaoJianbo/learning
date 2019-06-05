@@ -23,6 +23,22 @@
 		</button>
 	</div>
 	
+	<!-- 
+	<div th:if="${param.invalidSession}" class="alert alert-success alert-dismissible fade show" role="alert">
+		您的登录信息已失效
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	-->
+	
+	<div th:if="${param.expiredSession}" class="alert alert-success alert-dismissible fade show" role="alert">
+		<!-- You have been kicked out. -->您的账号已在别处登录，当前用户被迫下线
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	
 	<div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
 		<!-- Your login attempt was not successful, please try again. -->[[#{retry.login}]] <br/>
 		<!-- 登录失败的错误提示信息，参考https://blog.csdn.net/sun1021873926/article/details/60332059 -->
