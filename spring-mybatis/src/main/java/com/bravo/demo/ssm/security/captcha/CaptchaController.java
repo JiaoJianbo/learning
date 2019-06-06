@@ -21,11 +21,15 @@ public class CaptchaController {
 	private CaptchaGenerator imageCaptchaGenerator;
 	
 	protected static final String SESSION_CAPTCHA_KEY = "CAPTCHA_KEY";
+	protected static final String SESSION_CAPTCHA_EXPIRED_TIME = "CAPTCHA_EXPIRED_TIME";
 
 	@GetMapping("/image")
 	public void image(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Captcha captcha = imageCaptchaGenerator.generate(new ServletWebRequest(request));
-		WebUtils.setSessionAttribute(request, SESSION_CAPTCHA_KEY, captcha);
+		//不用将验证码连图片都放到 session 里，只需要 code 和过期时间
+		//WebUtils.setSessionAttribute(request, SESSION_CAPTCHA_KEY, captcha);
+		WebUtils.setSessionAttribute(request, SESSION_CAPTCHA_KEY, captcha.getCode());
+		WebUtils.setSessionAttribute(request, SESSION_CAPTCHA_EXPIRED_TIME, captcha.getExpireTime());
 		ImageIO.write(captcha.getImage(), "JPEG", response.getOutputStream());
 	}
 }

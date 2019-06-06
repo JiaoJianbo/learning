@@ -1,6 +1,7 @@
 package com.bravo.demo.ssm.security.captcha;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class CaptchaFilter extends OncePerRequestFilter/* implements Initializin
 	private static Logger logger = LoggerFactory.getLogger(CaptchaFilter.class);
 	private AuthenticationFailureHandler authenticationFailureHandler;
 	
+	// 需要进行验证码校验的请求地址，目前只有登录验证
 	private Set<String> targetUrls = new HashSet<>();
 
 	private SecurityProperties securityProperties;
@@ -84,7 +86,8 @@ public class CaptchaFilter extends OncePerRequestFilter/* implements Initializin
 	}
 
 	private void validate(HttpServletRequest request) throws ServletRequestBindingException {
-		Captcha captcha = (Captcha) WebUtils.getSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_KEY);
+		String captchaCode = (String) WebUtils.getSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_KEY);
+		LocalDateTime captcharExpiredTime = (LocalDateTime) WebUtils.getSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_EXPIRED_TIME);
 		
 		String codeInRequest = ServletRequestUtils.getStringParameter(request, "captcha");
 		//Locale locale = LocaleContextHolder.getLocale();
@@ -94,22 +97,25 @@ public class CaptchaFilter extends OncePerRequestFilter/* implements Initializin
 			throw new CaptchaException("验证码不能为空");
 		}
 		
-		if(captcha == null) {
+		if(captchaCode == null) {
 			throw new CaptchaException("验证码不存在");
 		}
 		
-		if(captcha.isExpried()) {
+		//if(captcha.isExpried()) {
+		if(LocalDateTime.now().isAfter(captcharExpiredTime)) {
 			WebUtils.setSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_KEY, null); //remove attribute
+			WebUtils.setSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_EXPIRED_TIME, null); //remove attribute
 			throw new CaptchaException("验证码已过期");
 		}
 
-		if(!StringUtils.equalsIgnoreCase(codeInRequest, captcha.getCode())) {
+		if(!StringUtils.equalsIgnoreCase(codeInRequest, captchaCode)) {
 			//throw new CaptchaException("验证码不匹配");
 			//throw new CaptchaException(messageSource.getMessage("captcha.notmatch", null, locale));
 			throw new CaptchaException(messages.getMessage("captcha.notmatch", "验证码不匹配!"));
 		}
 		
 		WebUtils.setSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_KEY, null); //remove attribute
+		WebUtils.setSessionAttribute(request, CaptchaController.SESSION_CAPTCHA_EXPIRED_TIME, null); //remove attribute
 	}
 	
 	public AuthenticationFailureHandler getAuthenticationFailureHandler() {
