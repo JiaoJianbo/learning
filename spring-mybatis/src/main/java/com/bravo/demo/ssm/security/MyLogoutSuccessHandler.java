@@ -39,8 +39,11 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, 
 			Authentication authentication) throws IOException, ServletException {
-		
-		logger.debug("{} logout successfully.", ((UserDetails)authentication.getPrincipal()).getUsername());
+		if(authentication != null) {
+			logger.debug("{} logout successfully.", ((UserDetails)authentication.getPrincipal()).getUsername());
+		} else {
+			logger.debug("MyLogoutSuccessHandler...");
+		}
 		
 		if(loginType == LoginType.JSON) {
 			response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
