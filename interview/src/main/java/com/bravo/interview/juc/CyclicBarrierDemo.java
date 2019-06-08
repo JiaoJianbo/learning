@@ -1,0 +1,42 @@
+package com.bravo.interview.juc;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+/**
+ * @author Bobby
+ *
+ * CyclicBarrier 的字面意思是可循环（Cyclic）使用的屏障（Barrier）。它要做的事情是，
+ * 让一组线程到达屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会打开门，
+ * 所有被屏障拦截的线程才会继续干活，线程进入屏障通过CyclicBarrier的 await() 方法。
+ */
+public class CyclicBarrierDemo {
+    public static void main(String[] args) {
+        int threadNum = 10;
+
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(threadNum, new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " All tasks ready.");
+            }
+        });
+
+
+        for(int i=0; i<threadNum; i++){
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + " stand by.");
+
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+    }
+
+
+}

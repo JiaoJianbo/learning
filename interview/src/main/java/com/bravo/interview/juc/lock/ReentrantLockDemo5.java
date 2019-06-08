@@ -1,6 +1,4 @@
-package com.bravo.interview.juc;
-
-import sun.font.FontRunIterator;
+package com.bravo.interview.juc.lock;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

@@ -1,4 +1,4 @@
-package com.bravo.interview.juc;
+package com.bravo.interview.juc.lock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;

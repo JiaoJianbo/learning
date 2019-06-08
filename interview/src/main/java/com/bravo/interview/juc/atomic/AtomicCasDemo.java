@@ -1,4 +1,4 @@
-package com.bravo.interview.juc;
+package com.bravo.interview.juc.atomic;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
