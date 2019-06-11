@@ -1,0 +1,10 @@
+server:
+  port: 8080
+  
+### 自定义 Starter 中的配置
+my:
+  bravo:
+    demo:
+      project-desc: 这是使用自定义 Stater 配置的一个项目描述信息
+  
+  
