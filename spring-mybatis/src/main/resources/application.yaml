@@ -74,6 +74,12 @@ spring:
   redis:
     host: localhost
     port: 6379
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+    username: guest
+    password: guest
 logging:
   config: classpath:log4j2-spring.xml
 management:

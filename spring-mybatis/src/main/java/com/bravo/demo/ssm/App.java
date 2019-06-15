@@ -3,6 +3,7 @@ package com.bravo.demo.ssm;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,6 +30,7 @@ import com.bravo.demo.ssm.service.AsyncTaskService;
 @EnableCaching // 开启缓存注解
 @EnableAsync //开启异步任务(多线程)
 @EnableScheduling //开启定时任务
+@EnableRabbit //开启基于注解的 RabbitMQ 模式
 public class App {
 	private static Logger log = LoggerFactory.getLogger(App.class);
 	
