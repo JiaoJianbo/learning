@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Bobby
  *
+ * 与其他 BlockingQueue 不同，SynchronousQueue是一个不存储元素的 BlockingQueue。
+ * 每一个 put 操作必须要等待一个 take 操作，否则不能继续添加元素，反之亦然。
  */
 public class SynchronousQueueDemo {
     public static void main(String[] args) {

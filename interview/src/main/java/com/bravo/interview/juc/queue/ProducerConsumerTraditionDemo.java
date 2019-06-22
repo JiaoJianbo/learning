@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author Bobby
  *
- * 步骤：1.判断、2.干活、 3.通知
+ * 步骤：1.判断 2.干活 3.通知
  *
  * 注意：防止虚假唤醒 (interrupts and spurious wakeups are possible, and this method (.wait) should always be used in a loop)
  */
