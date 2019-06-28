@@ -49,7 +49,11 @@ spring:
 mybatis:
   type-aliases-package: com.bravo.demo.ssm.entity # 实体类包，也可写作 typeAliasesPackage
   configuration:
+    jdbc-type-for-null: NULL
     map-underscore-to-camel-case: true
+    lazy-loading-enabled: true # 延迟加载
+    aggressive-lazy-loading: false
+  #config-location:  # 指定全局配置文件。如果全局配置比较多，可以单独写在全局配置文件 
   mapper-locations: classpath:mapper/*Mapper.xml  # 映射文件的位置，也可写作 mapperLocations
 
 # 默认log配置方式
@@ -158,7 +162,7 @@ spring:
   profiles: druid
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    # 以下属性参考 com.alibaba.druid.pool.DruidDataSource 类。
+    # 以下属性参考 com.alibaba.druid.pool.DruidDataSource 类。这些属性是 DruidDataSource 的，默认不会自动绑定，需要我们写Configuration绑定
     initial-size: 5
     #max-idle: 5  # maxIdle is deprecated
     #maximumPoolSize: 50  # 没有这个配置

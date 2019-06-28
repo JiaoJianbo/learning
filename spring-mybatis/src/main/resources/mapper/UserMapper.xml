@@ -3,15 +3,15 @@
 <mapper namespace="com.bravo.demo.ssm.dao.UserDao">
 	<resultMap id="userResultMap" type="com.bravo.demo.ssm.entity.User">
 		<id column="id" property="id" jdbcType="VARCHAR"/> <!-- jdbcType 参考 org.apache.ibatis.type.JdbcType -->
-		<id column="username" property="username" jdbcType="VARCHAR"/>
-		<id column="password" property="password" jdbcType="VARCHAR"/>
-		<id column="locked" property="locked" jdbcType="CHAR"/>
-		<id column="gender" property="gender" jdbcType="CHAR"/>
-		<id column="age" property="age" jdbcType="TINYINT"/>
-		<id column="birthday" property="birthday" jdbcType="DATE"/>
-		<id column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
-		<id column="last_logon_time" property="lastLogonTime" jdbcType="TIMESTAMP"/>
-		<id column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+		<result column="username" property="username" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="locked" property="locked" jdbcType="CHAR"/>
+		<result column="gender" property="gender" jdbcType="CHAR"/>
+		<result column="age" property="age" jdbcType="TINYINT"/>
+		<result column="birthday" property="birthday" jdbcType="DATE"/>
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+		<result column="last_logon_time" property="lastLogonTime" jdbcType="TIMESTAMP"/>
+		<result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
 	</resultMap>
 
 	<sql id="all_columns">
@@ -51,12 +51,13 @@
 		from user where username = #{username}
 	</select>
 
+	<!-- 使用注解时，要对自动生成主键回填，使用注解 @Options(useGeneratedKeys="true" keyProperty="id") -->
 	<insert id="insertUser" parameterType="com.bravo.demo.ssm.entity.User" useGeneratedKeys="true" keyProperty="id">
 		<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
 			select UUID()
 		</selectKey>
 		insert into user (id, username, password, gender, age, create_date, update_date) 
-		values (#{id}, #{username}, #{password}, #{gender}, #{age}, now(), now());
+		values (#{id}, #{username}, #{password}, #{gender}, #{age}, now(), now())
 	</insert>
 
 	<delete id="delUserById" parameterType="java.lang.String">

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bravo.demo.ssm.dao.SysRoleDao">
+
+	<select id="getRoleById" resultType="com.bravo.demo.ssm.entity.SysRole">
+		select * from sys_role where id = #{id}
+	</select>
+	
+	<resultMap id="sysRoleResult" type="com.bravo.demo.ssm.entity.SysRole">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="status" property="status"/>
+		<!-- 集合属性延迟加载 -->
+		<collection property="users" select="com.bravo.demo.ssm.dao.SysRoleDao.getAllUserByRoldId" column="id" fetchType="lazy">
+		</collection>
+	</resultMap>
+	<select id="getRoleByIdWithUsers" resultMap="sysRoleResult">
+		select * from sys_role where id = #{id}
+	</select>
+	
+	<!-- <select id="getAllUserByRoldId" resultMap="com.bravo.demo.ssm.dao.UserDao.userResultMap"> -->
+	<select id="getAllUserByRoldId" resultType="com.bravo.demo.ssm.entity.User">
+		select u.*
+		from sys_role_user ru, user u
+		where ru.uid = u.id
+		  and ru.rid = #{id}
+	</select>
+	
+</mapper>
