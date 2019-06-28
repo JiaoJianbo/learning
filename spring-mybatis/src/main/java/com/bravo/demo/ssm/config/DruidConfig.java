@@ -41,7 +41,7 @@ public class DruidConfig {
 		Map<String, String> initParameters = new HashMap<>();
 		initParameters.put(ResourceServlet.PARAM_NAME_USERNAME, "admin");
 		initParameters.put(ResourceServlet.PARAM_NAME_PASSWORD, "123456");
-		initParameters.put(ResourceServlet.PARAM_NAME_ALLOW, ""); //白名单
+		initParameters.put(ResourceServlet.PARAM_NAME_ALLOW, ""); //白名单，默认允许所有
 		initParameters.put(ResourceServlet.PARAM_NAME_DENY, "192.168.1.1,192.168.1.2"); //黑名单
 		bean.setInitParameters(initParameters );
 
