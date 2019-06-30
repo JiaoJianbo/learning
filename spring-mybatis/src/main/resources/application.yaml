@@ -53,6 +53,7 @@ mybatis:
     map-underscore-to-camel-case: true
     lazy-loading-enabled: true # 延迟加载
     aggressive-lazy-loading: false
+    #lazy-load-trigger-methods: equals,clone,hashCode,toString
   #config-location:  # 指定全局配置文件。如果全局配置比较多，可以单独写在全局配置文件 
   mapper-locations: classpath:mapper/*Mapper.xml  # 映射文件的位置，也可写作 mapperLocations
 

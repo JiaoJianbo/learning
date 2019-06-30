@@ -33,8 +33,9 @@ public class SysRoleTest {
 	@Test
 	public void testGetRoleByIdWithUsers() {
 		SysRole role = sysRoleDao.getRoleByIdWithUsers(1);
+		//System.out.println(role); // 这里直接输出 role 会触发延迟加载，参见 MyBatis 全局配置 lazyLoadTriggerMethods
 		System.out.println(role.getName());
-		//System.out.println(role.getUsers());
+		System.out.println(role.getUsers());
 	}
 	
 }
