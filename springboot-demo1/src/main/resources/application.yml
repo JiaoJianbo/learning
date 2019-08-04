@@ -1,0 +1,46 @@
+management:
+  endpoints:
+    web:
+      # Spring Boot 2 默认通过web只暴露 health 和 info 两个 endpoint，
+      exposure:
+        include: "*" # 暴露所有 endpoint
+      base-path: "/actuator"
+      cors: # CORS support
+        allowed-methods: GET, POST
+        allowed-origins: http://localhost
+  endpoint:
+    health:
+      cache:
+        time-to-live: 5s
+      show-details: always # 默认值是 never，所以通常只能看到一个总的 "status" 的状态
+  health:
+    defaults:
+      enabled: false
+    diskspace: # DiskSpaceHealthIndicator
+      enabled: true
+    db: # DataSourceHealthIndicator, 只有引入了 DataSource 信息后该 Indicator 才起作用
+      enabled: true
+
+### 自定义 actuator 的 info endpoint 的信息
+info:
+  app:
+    desc: "customize info endpoint"
+    groupId: @project.groupId@
+    artifactId: @project.artifactId@
+    version: @project.version@
+    encoding: @project.build.sourceEncoding@
+    java:
+      source: @java.version@
+
+
+### 以下是自定义配置
+hello:
+  defaultName: World
+### YAML 中配置复杂对象
+myConfig:
+  enabled: true
+  count: 10
+  itemName: "ConfigTest"
+  employeeList:
+    - {id: "001", name: "Ada"}
+    - {id: "002", name: "Bob"}
