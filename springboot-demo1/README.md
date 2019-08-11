@@ -1,10 +1,15 @@
 # Spring Boot Feature Demo
 
-所有功能基于 Spring Boot 2.x
+所有功能基于 Spring Boot 2.1.x
 
-1. YAML 中配置复杂对象
-2. 自定义 HealthIndicator
-3. 自定义 info endpoint 的属性 (actuator 中的 info endpoint) 
+1. YAML 中配置复杂对象  
+  参考 config.MyConfig, controller.HelloController  
+
+2. 自定义 HealthIndicator  
+  参考 actuate.MyHealthIndicator 和 application.yml 的配置
+  
+3. 自定义 info endpoint 的属性 (actuator 中的 info endpoint)   
+  参考 application.yml 的配置
 
 
 
