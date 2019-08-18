@@ -1,1 +1,54 @@
 
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb # In-memory (named)。数据在内存中，服务启动，在内存中创建数据库，服务关闭，数据丢失
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    schema: classpath:database/h2/schema.sql
+    data: classpath:database/h2/data.sql
+  ### h2 web consloe 数据库GUI管理应用
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+        hbm2ddl:
+          auto: create
+          delimiter: ";"
+          charset_name: UTF-8
+      javax.persistence.schema-generation.scripts.action: create-drop
+      javax.persistence.schema-generation.scripts.create-target: "./target/create.sql"
+      javax.persistence.schema-generation.scripts.drop-target: "./target/create.sql"
+    open-in-view: true
+
+management:
+  endpoints:
+    web:
+      base-path: "/actuator"
+  endpoint:
+    health:
+      show-details: always # 默认值是 never，所以通常只能看到一个总的 "status" 的状态
+  health:
+    defaults:
+      enabled: true
+    diskspace: # DiskSpaceHealthIndicator
+      enabled: true
+    db: # DataSourceHealthIndicator, 只有引入了 DataSource 信息后该 Indicator 才起作用
+      enabled: true
+
+### 自定义 actuator 的 info endpoint 的信息
+info:
+  app:
+    desc: "Demo Spring-Data-JPA 的用法"
+    groupId: @project.groupId@
+    artifactId: @project.artifactId@
