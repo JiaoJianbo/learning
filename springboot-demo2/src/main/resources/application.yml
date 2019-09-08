@@ -4,7 +4,7 @@ spring:
     url: jdbc:h2:mem:mydb # In-memory (named)。数据在内存中，服务启动，在内存中创建数据库，服务关闭，数据丢失
     driver-class-name: org.h2.Driver
     username: sa
-    password: sa
+    password: ENC(kkTmYOEMrB6rvYrj9+gcaw==) # sa
     schema: classpath:database/h2/schema.sql
     data: classpath:database/h2/data.sql
   ### h2 web consloe 数据库GUI管理应用
@@ -52,3 +52,12 @@ info:
     desc: "Demo Spring-Data-JPA 的用法"
     groupId: @project.groupId@
     artifactId: @project.artifactId@
+
+### Jasypt 的加密salt，也可采用设置启动参数 "–jasypt.encryptor.password=MY_SECRET", "-Djasypt.encryptor.password=MY_SECRET" 的形式配置
+### 在生产环境使用时，使用命令行参数或者环境变量设置 salt 值
+### java -jar target/jasypt-spring-boot-demo-0.0.1-SNAPSHOT.jar --jasypt.encryptor.password=MY_SECRET
+### java -Djasypt.encryptor.password=MY_SECRET -jar target/jasypt-spring-boot-demo-0.0.1-SNAPSHOT.jar
+jasypt:
+  encryptor:
+    password: MY_SECRET
+    algorithm: PBEWithMD5AndDES
