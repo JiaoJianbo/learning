@@ -15,3 +15,12 @@
  
 3. 联合主键的另一种写法  
   参考 Person, PersonKey 的写法。仅使用 @IdClass 注解，并没有使用 @EmbeddedId 和 @Embeddable 注解。并且主类中（Person）还要重复定义主键类（PersonKey）中的属性（name, idCard）。
+
+4. 使用 [jasypt-spring-boot](https://github.com/ulisesbocchio/jasypt-spring-boot) 对配置参数加密
+
+5. Spring Data 中 @CreatedDate, @LastModifiedDate 的使用  
+  "can be used on properties of type Joda-Time, DateTime, legacy Java Date and Calendar, JDK8 date and time types, and long or Long"。
+  其实在 Hibernate 中也有类似的注解 @UpdateTimestamp 和 @CreationTimestamp。
+
+6. Hibernate 注解 @DynamicInsert 和 @DynamicUpdate 的用法  
+  参考 [Hibernate利用@DynamicInsert和@DynamicUpdate生成动态SQL语句](https://www.cnblogs.com/quanyongan/p/3152290.html)
