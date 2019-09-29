@@ -20,6 +20,8 @@ management:
       enabled: true
     db: # DataSourceHealthIndicator, 只有引入了 DataSource 信息后该 Indicator 才起作用
       enabled: true
+    jms: # JmsHealthIndicator
+      enabled: false
 
 ### 自定义 actuator 的 info endpoint 的信息
 info:
