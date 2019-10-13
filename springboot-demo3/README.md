@@ -67,6 +67,8 @@
       }
     }
     ```
-    
+2. 引入 [HAL browser](https://github.com/mikekelly/hal-browser)，可以通过访问 http://127.0.0.1:8080/browser/index.html 来浏览和测试 API。
+
+
 
 
