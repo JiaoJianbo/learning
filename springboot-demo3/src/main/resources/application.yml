@@ -1,0 +1,25 @@
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:mydb # In-memory (named)。数据在内存中，服务启动，在内存中创建数据库，服务关闭，数据丢失
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+#    schema: classpath:database/h2/schema.sql
+    data: classpath:database/h2/data.sql
+  ### h2 web consloe 数据库GUI管理应用
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+    open-in-view: true
