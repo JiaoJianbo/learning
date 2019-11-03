@@ -69,6 +69,19 @@
     ```
 2. 引入 [HAL browser](https://github.com/mikekelly/hal-browser)，可以通过访问 http://127.0.0.1:8080/browser/index.html 来浏览和测试 API。
 
+3. 使用 [JSONAssert](https://github.com/skyscreamer/JSONassert) 比较两个 JSON 是否相等。
 
-
-
+    JSONAssert 已被`spring-boot-starter-test` 默认集成。如果要单独使用，可以引入 Maven 依赖。
+    ```xml
+    <dependency>
+        <groupId>org.skyscreamer</groupId>
+        <artifactId>jsonassert</artifactId>
+        <version>1.5.0</version>
+    </dependency>
+    ```
+    
+    **参考:**  
+    [JSONassert Cookbook](http://jsonassert.skyscreamer.org/cookbook.html)  
+    [JSONAssert – How to unit test JSON data](https://www.mkyong.com/java/jsonassert-how-to-unit-test-json-data/)  
+    [Spring REST Integration Test Example](https://www.mkyong.com/spring-boot/spring-rest-integration-test-example/)  
+    [JSONassert 1.5.1-SNAPSHOT API](http://jsonassert.skyscreamer.org/apidocs/index.html)
