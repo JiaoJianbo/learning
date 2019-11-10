@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 为了配置 HTTPS 而添加的配置。将用户发起额 HTTP 请求，自动转发到 HTTPS 上。
+ * 为了配置 HTTPS 而添加的配置。将用户发起的 HTTP 请求，自动转发到 HTTPS 上。
  *
  * @author Bobby
  * @since 2019/11/10 23:22
@@ -33,7 +33,7 @@ public class TomcatConfig {
 
     /*
      * 也有说用 EmbeddedServletContainerFactory 或 TomcatEmbeddedServletContainerFactory，
-     * 但是在 Spring Boot 2.x 中要用 TomcatServletWebServerFactory
+     * 但是在 Spring Boot 2.x 中要用 TomcatServletWebServerFactory。
      */
     @Bean
     public TomcatServletWebServerFactory tomcatServletWebServerFactory() {
