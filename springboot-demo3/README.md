@@ -116,7 +116,7 @@
     JKS 密钥库使用专用格式。建议使用 "keytool -importkeystore -srckeystore D:\keystore.jks -destkeystore D:\keystore.jks -deststoretype pkcs12" 迁移到行业标准格式 PKCS12。
     ```
     
-    2). 拷贝证书到 resource 目录下，并配置 application.yml。这里的 password 就是刚才生成证书时输入的。
+    2). 拷贝上面生成的证书到 resource 目录下，并在 application.yml 中添加如下配置，这里的 password 就是刚才生成证书时输入的。
     
     ```yaml
     server:
@@ -127,6 +127,10 @@
         key-store-password: my@secret
     ```
     
+    3). 如果需要将 HTTP 请求自动重定向到 HTTPS 请求端口，可以添加 `com.bravo.demo.springbootdemo3.config.TomcatConfig` 中的配置。
+    
     **参考:**  
-    [常用的Java Keytool Keystore命令](https://csr.chinassl.net/keytool-commands.html)
+    [常用的Java Keytool Keystore命令](https://csr.chinassl.net/keytool-commands.html)  
+    [Spring Boot 支持 Https 有那么难吗？](https://segmentfault.com/a/1190000020052375)  
+    
     
