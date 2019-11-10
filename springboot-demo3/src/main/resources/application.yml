@@ -27,3 +27,9 @@ spring:
     rest:
       base-path: /api
 
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.jks
+    key-password: my@secret
+    key-store-password: my@secret
