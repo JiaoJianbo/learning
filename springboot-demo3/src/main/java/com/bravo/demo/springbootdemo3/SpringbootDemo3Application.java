@@ -1,7 +1,10 @@
 package com.bravo.demo.springbootdemo3;
 
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author Bobby
@@ -14,4 +17,8 @@ public class SpringbootDemo3Application {
         SpringApplication.run(SpringbootDemo3Application.class, args);
     }
 
+    @Bean
+    public MapperFactory getFactory() {
+        return new DefaultMapperFactory.Builder().build();
+    }
 }

@@ -133,4 +133,10 @@
     [常用的Java Keytool Keystore命令](https://csr.chinassl.net/keytool-commands.html)  
     [Spring Boot 支持 Https 有那么难吗？](https://segmentfault.com/a/1190000020052375)  
     
+5. 使用 [Orika](https://github.com/orika-mapper/orika) 做对象之间的拷贝。 
+    
+    **参考:**  
+    [Springboot集成MapperFactory类属性复制](http://www.voidcn.com/article/p-qvpvridt-hh.html)  
+    [Orika的使用姿势](https://www.jianshu.com/p/271cf6976a3d)  
+    [使用 Orika 实现bean 映射](https://blog.csdn.net/neweastsun/article/details/80559868)
     

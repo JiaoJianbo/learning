@@ -35,6 +35,12 @@
             <artifactId>spring-data-rest-hal-browser</artifactId>
         </dependency>
 
+        <!-- Orika -->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.4</version>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
