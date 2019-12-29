@@ -1,0 +1,11 @@
+
+### 自定义 actuator 的 info endpoint 的信息
+info:
+  app:
+    desc: "customize info endpoint"
+    groupId: @project.groupId@
+    artifactId: @project.artifactId@
+    version: @project.version@
+    encoding: @project.build.sourceEncoding@
+    java:
+      source: @java.version@
