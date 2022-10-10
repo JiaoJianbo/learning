@@ -104,6 +104,12 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.2.5</version>
 		</dependency>
+		<!-- 通用 Mapper -->
+		<dependency>
+		    <groupId>tk.mybatis</groupId>
+		    <artifactId>mapper</artifactId>
+		    <version>4.1.5</version>
+		</dependency>
 
 		<!-- Druid datasource -->
 		<dependency>
