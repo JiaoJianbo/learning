@@ -24,3 +24,10 @@
 
 6. Hibernate 注解 @DynamicInsert 和 @DynamicUpdate 的用法  
   参考 [Hibernate利用@DynamicInsert和@DynamicUpdate生成动态SQL语句](https://www.cnblogs.com/quanyongan/p/3152290.html)
+
+7. 联合查询如何将复杂结果拼成一个对象结果返回, demo 中用了以下几种方式：   
+   - 参考 EmployeeDept 和 EmployeeDeptRepository 的实现
+   - 参考 EmployeeDept2 和 EmployeeDept2Repository.getEmpWithDeptByDeptId 的实现
+   - 参考 EmployeeDept2 和 EmployeeDept2Repository.findEmployeeByDeptId 的实现。 这种方式的代码量最多。
+   - 参考 EmployeeDeptService.findByEntityManager 和  EmployeeDeptService.findByEntityManager2 方法，直接操作 `entityManager` 查询。
+
