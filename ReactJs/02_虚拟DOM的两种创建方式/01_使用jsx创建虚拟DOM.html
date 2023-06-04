@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>01_使用jsx创建虚拟DOM</title>
+    <!--react 核心库-->
+    <script src="../js/react.min.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.min.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+    
+    <script type="text/babel">  /* 此处一定要写 babel */
+      const VDOM = ( /* 此处一定不要写引号，因为不是字符串，虚拟DOM */
+        <h1 id="title">
+          <span>Hello, React</span>
+        </h1>
+      );
+
+      ReactDOM.render(
+        VDOM, 
+        document.getElementById("example")
+      );
+
+    </script>
+  </body>
+</html>

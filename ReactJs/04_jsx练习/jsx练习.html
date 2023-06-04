@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>04_jsx练习</title>
+    <!--react 核心库-->
+    <script src="../js/react.min.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.min.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+    
+    <script type="text/babel">  /* 此处一定要写 babel */
+    /*
+        注意区分【js语句（代码）】和【js表达式】
+        1.表达式：一个表达式会产生一个指，可以放在任何一个需要值的地方。
+            例如：a, a+b, demo(1), arr.map(), function test(){}, 
+
+        2.语句(代码)：
+            if(){},
+            for(){},
+            switch(){}
+    */
+
+        const data = ["Angular", "React", "Vue"];
+      const VDOM = ( /* 此处一定不要写引号，因为不是字符串，虚拟DOM */
+        <div>
+            <h1 id="title">
+            <span>前端JS框架列表</span>
+            </h1>
+            <ul>
+                {
+                    data.map((item,index) => {
+                        return <li id={index}>{item}</li>
+                    })
+                }
+            </ul>
+        </div>
+      );
+
+      ReactDOM.render(
+        VDOM, 
+        document.getElementById("example")
+      );
+
+    </script>
+  </body>
+</html>
