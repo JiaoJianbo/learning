@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>06_组件实例的三大核心属性之1_state</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+  </head>
+  <body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+    
+    <script type="text/babel">  /* 此处一定要写 babel */
+      class Weather extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {isHot:true};
+        }
+
+        render() {
+          console.info(this);
+          const {isHot} = this.state;
+          return <h1>今天天气很{isHot ? '炎热' : '凉爽'}</h1>
+        }
+      }
+
+      ReactDOM.render(<Weather/>, document.getElementById("example"));
+    </script>
+  </body>
+</html>
