@@ -5,8 +5,42 @@
     <title>2_原生事件绑定</title>
   </head>
   <body>
-    <script type="text/javascript">
+    <button id="button1">Button1</button> 
+    <button id="button2">Button2</button> 
+    <button id="button3" onclick="clickDemo()">Button3</button>
 
+    <script type="text/javascript">
+      //1.第一种绑定方式
+      document.getElementById("button1").addEventListener("click", ()=>{
+        console.info(this);
+        console.log("Button1 被点击了");
+      });
+      document.getElementById("button1").addEventListener("click", function() {
+        console.info(this);
+        console.log("Button1 被点击了2");
+      });
+      /* 使用箭头函数的，方法里面this是 window 对象*/
+
+
+
+      //2.第二种绑定方式
+      document.getElementById("button2").onclick = function(){
+        console.info(this);
+        console.log("Button2 被点击了");
+      };
+      // document.getElementById("button2").onclick = ()=>{
+      //   console.info(this);
+      //   console.log("Button2 被点击了");
+      // };
+
+
+      //3.第三种绑定方式 —— React 推荐方式
+      function clickDemo(){
+        'use strict'
+        console.info(this);
+        console.log("Button3 被点击了");
+      };
+      /* 这个方法里面this是 window 对象。但是如果启用 strict 模式，this就是 undefined */
     </script>
 
   </body>
