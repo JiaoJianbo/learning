@@ -27,8 +27,26 @@
     const p1 = new Person('Tom', 18);
     p1.speak(); //通过实例对象调用
 
-    const m = p1.speak;
+    const m = p1.speak; //直接调用，由于开启了 strict 模式，所以方法中的 this 是 undefined
     m();
+
+
+
+    class Car {
+      constructor(name, price) {
+        this.name = name;
+        this.price = price;
+      }
+
+      // 类中可以直接写构造器，方法，赋值语句
+      // 下面的赋值语句含义为给Car的实例添加一个属性 wheel,值为4
+      wheel = 4;
+    }
+
+    const c1 = new Car('Benz', 999);
+    console.info(c1);
+    const c2 = new Car('BMW', 666);
+    console.info(c2);
   </script>
 
 </body>

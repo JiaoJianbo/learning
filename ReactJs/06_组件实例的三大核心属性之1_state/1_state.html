@@ -18,7 +18,7 @@
       class Weather extends React.Component {
         constructor(props) {
           super(props);
-          this.state = {isHot:true};
+          this.state = {isHot:true, wind:'微风'};
 
           //为 Weather 实例对象绑定一个属性，指向原型对象上的 changeWeather 方法。这种方式解决 this 指向
           this.changeWeather = this.changeWeather.bind(this);
@@ -28,15 +28,25 @@
           //changeWeather 方法放在哪？ —— 类的原型对象上，供实例使用
           //【通过 Weather 实例调用changeWeather时】，changeWeather中的this就是 Weather 实例
           //由于 changeWeather 是作为 onClick 的回调，所以不是通过实例调用的，是直接调用。且类中的方法默认开启了局部的 strict 模式，所以 this 是 undefined
-          console.info(this);
-          console.log("标题被点击了");
+          //console.info(this);
+          // console.log("标题被点击了");
+
+          const isHot = this.state.isHot;
+          // 注意：状态(state)不能直接更改，需要借助内部API
+          //this.state.isHot = !isHot;  // 错误写法
+
+          // state 更改必须通过 setState 方法，且更新是合并，并不是替换
+          this.setState({isHot: !isHot}); 
+          console.info(this.state.isHot);
+  
+  
         }
 
         render() {
-          console.info(this);
-          const {isHot} = this.state;
+          // console.info(this);
+          const {isHot,wind} = this.state;
           /* 在点击时，这里的 changeWeather 并不是通过实例调用的，所以方法里的this 并不是 weather 对象 */
-          return <h1 id="title" onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}</h1>
+          return <h1 id="title" onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
         }
       }
 
