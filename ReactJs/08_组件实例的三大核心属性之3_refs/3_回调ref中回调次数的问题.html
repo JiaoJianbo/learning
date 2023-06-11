@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_回调ref中回调次数的问题</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+</head>
+
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class Demo extends React.Component {
+            
+            state = {isHot: true};
+
+            showInfo = () => {
+                const {input1} = this;
+                alert(input1.value);
+            }
+
+            changeWeather = () => {
+                this.setState({isHot: !(this.state.isHot)});
+            }
+
+            saveInput = (c) => {
+                // 这样的话，不会每次渲染都调用了
+                this.input1 = c;
+                console.log('@', c);
+            }
+
+            render() {
+                const {isHot} = this.state;
+                return (
+                    <div>
+                        <h2>今天天气{isHot? '炎热' : '凉爽'}</h2>
+                        {/* jsx 里面的注释写法 */}
+                        {/* <input ref={(c) => {this.input1 = c;console.log('@', c);}} type="text" /> &nbsp; 内联函数写法 */}
+                        <input ref={this.saveInput} type="text" /> &nbsp;
+                        
+                        <button onClick={this.showInfo}>点我提示输入的数据</button> &nbsp;
+                        <button onClick={this.changeWeather}>点我切换天气</button>
+                    </div>
+                );
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Demo />, document.getElementById('example'));
+    </script>
+
+</body>
+
+</html>
