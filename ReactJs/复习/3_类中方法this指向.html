@@ -39,14 +39,18 @@
       }
 
       // 类中可以直接写构造器，方法，赋值语句
-      // 下面的赋值语句含义为给Car的实例添加一个属性 wheel,值为4
+      // 下面的赋值语句含义为给 Car 的实例对象添加一个属性 wheel,值为4
       wheel = 4;
+
+      static st = 100;
     }
 
     const c1 = new Car('Benz', 999);
     console.info(c1);
     const c2 = new Car('BMW', 666);
     console.info(c2);
+
+    console.info(Car.st);
   </script>
 
 </body>
