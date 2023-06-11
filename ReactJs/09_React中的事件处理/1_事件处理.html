@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_事件处理</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+</head>
+
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class Demo extends React.Component {
+            /* 
+            1. 通过 onXxx 属性指定事件处理函数（注意大小写）
+                - React 使用的是自定义（合成）事件，而不是使用的原生 DOM 事件 —— 为了更好的兼容性
+                - React 中的事件是通过事件委托方式处理的（委托给组件最外层的元素） —— 为了高效
+            2. 通过 event.target 得到发生事件的 DOM 元素 —— 不要过度使用 ref
+            */
+
+            // 创建 ref 容器
+            myRef = React.createRef();
+            // 请勿过度使用 ref
+            // myRef2 = React.createRef();
+
+            showData = () => {
+                // console.info(this.myRef.current);
+                alert(this.myRef.current.value);
+            }
+
+            showData2 = (event) => {
+                // alert(this.myRef2.current.value);
+                alert(event.target.value)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" placeholder="点击右侧按钮显示数据"/> &nbsp;
+                        <button onClick={this.showData}>點擊顯示左侧数据</button> &nbsp;
+                        {/* <input ref={this.myRef2} onBlur={this.showData2} type="text" placeholder="失去焦点显示数据"/> */}
+                        <input onBlur={this.showData2} type="text" placeholder="失去焦点显示数据"/> 
+                    </div>
+                );
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Demo/>, document.getElementById('example'));
+    </script>
+
+</body>
+</html>
