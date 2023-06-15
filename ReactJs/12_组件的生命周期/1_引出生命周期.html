@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1_引出生命周期</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class Life extends React.Component {
+            state = {
+                opacity: 1
+            }
+
+            /* constructor(){
+                super();
+                setInterval(() => {
+                    let {opacity} = this.state;
+                    opacity -= 0.1;
+                    if (opacity <= 0) {
+                        opacity = 1;
+                    }
+                    // 特别注意：这里会触发无限递归地开启定时器。因为每次更改 state 就会触发 render 方法执行
+                    this.setState({opacity}); // 当属性名很属性值变量同名时，可以使用简写形式
+                }, 200); 
+            } */
+
+            death = () => {
+                // 清除定时器
+                // clearInterval(this.state.timer);
+                // 卸载组件
+                ReactDOM.unmountComponentAtNode(document.getElementById('example'));
+            }
+
+            // componentDidMount 的调用时机：组件挂载完毕后
+            componentDidMount() {
+                this.state.timer = setInterval(() => {
+                    let {opacity} = this.state;
+                    opacity -= 0.1;
+                    if (opacity <= 0) {
+                        opacity = 1;
+                    }
+                    // 特别注意：这里会触发无限递归地开启定时器。因为每次更改 state 就会触发 render 方法执行
+                    this.setState({opacity}); // 当属性名很属性值变量同名时，可以使用简写形式
+                }, 200); 
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.state.timer);
+            }
+
+            // render 的调用时机：1.初始化渲染，2. 更新 state 后
+            render() {
+                console.log('@');
+                /*
+                 setInterval(() => {
+                    let {opacity} = this.state;
+                    opacity -= 0.1;
+                    if (opacity <= 0) {
+                        opacity = 1;
+                    }
+                    // 特别注意：这里会触发无限递归地开启定时器。因为每次更改 state 就会触发 render 方法执行
+                    this.setState({opacity}); // 当属性名很属性值变量同名时，可以使用简写形式
+                }, 200); */
+
+                return (
+                    <div>
+                        <h2 style={{opacity: this.state.opacity}}>React 学不会怎么办？</h2>
+                        <button onClick={this.death}>不活了</button>    
+
+                    </div>
+                );
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Life/>, document.getElementById('example'));
+    </script>
+
+</body>
+</html>
