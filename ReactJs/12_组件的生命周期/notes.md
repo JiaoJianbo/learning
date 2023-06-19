@@ -25,6 +25,6 @@
 
 
 #### 常用的
-- componentWillMount()
+- componentDidMount()
 - render()
 - componentWillUnmount

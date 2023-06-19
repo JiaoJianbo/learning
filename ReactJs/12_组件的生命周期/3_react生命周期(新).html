@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2_1react生命周期(旧)</title>
+    <title>3_react生命周期(新)</title>
     <!--react 核心库-->
     <script src="../js/react.development.js"></script>
     <!--react dom，支持react操作DOM-->
@@ -16,13 +16,9 @@
     <div id="example"></div>
 
     <script type="text/babel">  /* 此处一定要写 babel */
-
-        /*
-            常用的：
-            componentDidMount，一般在这个钩子常做一些初始化的动作，例如：开启定时器，发送网络请求，订阅消息
-            render，必须的
-            componentWillUnmount，一般在这个钩子常做一些收尾的事，例如：关闭定时器，取消订阅消息
-        */
+        /**
+         * 除过 componentWillUnmount 以外，以前生命周期函数中三个 xxxWillXxx 的都更名为 UNSAFE_
+         */
 
         class Count extends React.Component {
             constructor(props) {
@@ -49,12 +45,20 @@
                 this.forceUpdate();
             }
 
-            componentWillReceiveProps() {
-                console.log("Count---componentWillReceiveProps");
-            }
+            // UNSAFE_componentWillReceiveProps() {
+            //     console.log("Count---UNSAFE_componentWillReceiveProps");
+            // }
 
-            componentWillMount() {
-                console.log("Count---componentWillMount");
+            // UNSAFE_componentWillMount() {
+            //     console.log("Count---UNSAFE_componentWillMount");
+            // }
+
+            // 返回一个对象更新 state，如果返回 null 则不更新任何内容。适用于在任何时候 state 的值取决于 props，但不是一定要用
+            static getDerivedStateFromProps(props, state) {
+                console.log("Count---getDerivedStateFromProps", props, state);
+                return null;
+                // return {sum: 99};
+                // return props;
             }
 
             // 控制组件是否更新的“阀门”。不写的时候，默认加的返回true
@@ -64,12 +68,18 @@
                 return true;
             }
 
-            componentWillUpdate() {
-                console.log("Count---componentWillUpdate");
+            // UNSAFE_componentWillUpdate() {
+            //     console.log("Count---UNSAFE_componentWillUpdate");
+            // }
+
+            // 更新之前获取快照
+            getSnapshotBeforeUpdate(prevProps, prevState) {
+                console.log('Count---getSnapshotBeforeUpdate-prevProps', prevProps, prevState);
+                return 'Snapshot-Value-' + prevState.sum; // 返回值会传给 componentDidUpdate 方法
             }
 
-            componentDidUpdate() {
-                console.log("Count---componentDidUpdate");
+            componentDidUpdate(prevProps, prevState, snapshotValue) {
+                console.log("Count---componentDidUpdate", prevProps, prevState, snapshotValue);
             }
 
             componentDidMount() {
@@ -79,6 +89,9 @@
             componentWillUnmount() {
                 console.log("Count---componentWillUnmount");
             }
+
+
+
 
             render() {
                 console.info("Count---render");
@@ -95,7 +108,7 @@
         }
 
         // 渲染组件到页面
-        ReactDOM.render(<Count/>, document.getElementById('example'));
+        ReactDOM.render(<Count sum={100}/>, document.getElementById('example'));
     </script>
 
 </body>
