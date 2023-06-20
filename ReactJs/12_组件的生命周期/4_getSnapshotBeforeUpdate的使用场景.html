@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4_getSnapshotBeforeUpdate的使用场景</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+    <style>
+        .list {
+            width: 200px;
+            height: 150px;
+            background-color: skyblue;
+            overflow: auto;
+        }
+
+        .news {
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class NewsList extends React.Component {
+            state = {newsArr:[]};
+
+            componentDidMount() {
+                setInterval(() => {
+                    const {newsArr} = this.state;
+                    const news = '新闻' + (newsArr.length + 1);
+                    this.setState({newsArr: [news, ...newsArr]});
+                }, 1500);
+            }
+
+            getSnapshotBeforeUpdate() {
+                return this.refs.list.scrollHeight;
+            }
+
+            componentDidUpdate(prevProps, prevState, height) {
+                // scrollHeight = 新闻条数 * 30px
+                // scrollTop = 当前位置滚动到顶端的高度
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - height ; // (this.refs.list.scrollHeight - height = 30px);
+            }
+
+            render() {
+                return(
+                    <div className="list" ref="list">
+                    {
+                        this.state.newsArr.map((n, index) => {
+                            return <div key={index} className="news">{n}</div>;
+                        })
+                    }
+                    </div>
+                );
+            }
+
+
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<NewsList/>, document.getElementById('example'));
+    </script>
+</body>
+</html>

@@ -24,7 +24,35 @@
   - 1. componentWillUnmount()
 
 
-#### 常用的
+
+### 生命周期的三个阶段（新）
+
+1. **初始化阶段**：由 ReactDOM.render() 触发 —— 初次渲染
+  - 1. constructor()
+  - 2. getDerivedStateFromProps()
+  - 3. render()
+  - 4. componentDidMount()
+
+
+2. **更新阶段**：由 this.setState() 或由父组件 render() 触发
+  - 1. getDerivedStateFromProps()
+  - 2. shouldComponentUpdate()
+  - 3. render()
+  - 4. getSnapshotBeforeUpdate()
+  - 5. componentDidUpdate()
+
+
+3. **卸载阶段**：由 ReactDOM.unmountComponentAtNode() 触发
+  - 1. componentWillUnmount()
+
+
+### 常用的
 - componentDidMount()
 - render()
 - componentWillUnmount
+
+
+### 即将废弃的
+- componentWillMount()
+- componentWillReceiveProps()
+- componentWillUpdate()
