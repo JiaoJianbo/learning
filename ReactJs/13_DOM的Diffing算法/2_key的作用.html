@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2_key的作用</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class Person extends React.Component {
+            state={persons: [
+                {id:1, name: 'Tom', age:18},
+                {id:2, name: 'Jerry', age:18}
+            ]};
+ 
+            add = () => {
+                const {persons} = this.state;
+                const newPerson = {id:persons.length+1, name: 'Rose', age:18};
+                this.setState({persons: [newPerson, ...persons]});
+            }
+
+            render() {
+                return(
+                    <div>
+                        <h3>展示人员信息</h3>
+                        <button onClick={this.add}>添加人员</button> <br/>
+                        <h4>使用 index 作为 key</h4>
+                        <ul>
+                        {
+                            this.state.persons.map((p, index) => {
+                                return <li key={index}>{p.name} --- {p.age} &nbsp; <input type="text"/></li>;
+                            })
+                        }
+                        </ul>
+                        <br/>
+                        <h4>使用 id 作为 key</h4>
+                        <ul>
+                        {
+                            this.state.persons.map((p, index) => {
+                                return <li key={p.id}>{p.name} --- {p.age} &nbsp; <input type="text"/></li>;
+                            })
+                        }
+                        </ul>
+
+                    </div>
+                );
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Person/>, document.getElementById('example'));
+    </script>
+</body>
+</html>

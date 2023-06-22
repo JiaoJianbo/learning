@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1_验证DOM的Diffing算法</title>
+    <!--react 核心库-->
+    <script src="../js/react.development.js"></script>
+    <!--react dom，支持react操作DOM-->
+    <script src="../js/react-dom.development.js"></script>
+    <!--babel, 用于将jsx转为js-->
+    <script src="../js/babel.min.js"></script>
+</head>
+<body>
+    <!-- 准备一个容器-->
+    <div id="example"></div>
+
+    <script type="text/babel">  /* 此处一定要写 babel */
+        class Clock extends React.Component {
+            state = {date:new Date()};
+
+            componentDidMount() {
+                setInterval(() => {
+                    this.setState({date:new Date()});
+                }, 1000);
+            }
+
+            render(){
+                return(
+                    <div>
+                        <h3>当前时间是</h3>
+                        <span>{this.state.date.toTimeString()}</span>
+                    </div>
+                );
+            }
+ 
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Clock/>, document.getElementById('example'));
+    </script>
+</body>
+</html>
