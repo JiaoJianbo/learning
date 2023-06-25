@@ -1,0 +1,10 @@
+
+.list-group {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    border-radius: 0.25rem;
+  }
