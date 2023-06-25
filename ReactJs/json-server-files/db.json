@@ -1,0 +1,15 @@
+{
+  "posts": [
+    { "id": 1, "title": "json-server", "author": "typicode" }
+  ],
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ],
+  "profile": { "name": "typicode" },
+
+  "students": [
+    {"id": 1, "name": "张三", "gender": "F"},
+    {"id": 2, "name": "Tom", "gender": "M"},
+    {"id": 3, "name": "Sophia", "gender": "F"}
+  ]
+}

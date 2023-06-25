@@ -1,0 +1,7 @@
+{
+  "cars": [
+    {"id": 1, "name": "Benz", "price": 11111},
+    {"id": 2, "name": "BYD", "price": 22222},
+    {"id": 3, "name": "Posche", "price": 333333}
+  ]
+}
