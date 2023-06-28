@@ -9,6 +9,7 @@
     "axios": "^1.4.0",
     "nanoid": "^4.0.2",
     "prop-types": "^15.8.1",
+    "pubsub-js": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -38,7 +39,6 @@
       "last 1 safari version"
     ]
   },
-  
   "//": "解决跨域问题。如下方式只能配置单个代理。但是使用 json-server 作服务端的时候可以不用代理",
   "// proxy": "http://localhost:5000"
 }

@@ -136,3 +136,15 @@ module.exports = function(app) {
 说明：
   - 优点：可以配置多个代理，可以灵活的控制请求是否走代理。
   - 缺点：配置繁琐，前端请求资源时必须加前缀。
+
+
+## 消息发布订阅机制
+1. 工具库 PubSubJS
+
+2. 下载：npm install pubsub-js --save
+
+3. 使用：
+  - import PubSub from 'pubsub-js'
+  - PubSub.subscribe('delete', function(data)); // 订阅
+  - PubSub.publish('delete', data); // 发布消息
+
