@@ -148,3 +148,43 @@ module.exports = function(app) {
   - PubSub.subscribe('delete', function(data)); // 订阅
   - PubSub.publish('delete', data); // 发布消息
 
+
+## 扩展：Fetch
+1. 文档
+  - <a href='https://www.jianshu.com/p/THLARe?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation' target='_blank'>传统 Ajax 已死，Fetch 永生</a>
+
+2. 特点
+  - fetch 是原生函数，不再使用 XmlHttpRequest 对象提交 Ajax 请求
+  - 老版本浏览器可能不支持
+
+3. 相关 API 
+  - [使用 Fetch](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch)
+
+## github 搜索案例相关知识点
+1. 设计状态时要考虑全面，如果带有网络请求的组件，要考虑请求失败怎么办
+
+2. ES6 小知识点：解构赋值和重命
+```javascript 
+  let obj = {a: {b:1}}
+  const {a} = obj; // 传统解构赋值
+  const {a:{b}} = obj; // 连续解构赋值
+  const {a:{b:value}} = obj; // 连续解构赋值+重命名
+```
+
+3. 消息发布订阅机制
+  - 先订阅再发布，
+  - 适用于任意组件之间的通信
+  - 要在组件的 componentWithUnmount 中取消订阅
+
+4. fetch 发送请求（关注分离设计思想）
+```javascript
+  try {
+    const response = await fetch(`https://api.github.com/search/users?q=${keyword}`);
+    const data = await response.json();
+    console.log(data);
+    PubSub.publish('search', { users: data.items, isLoading: false });
+  } catch (error) {
+    console.log('请求出错，', error);
+    PubSub.publish('search', { err: error.message, isLoading: false });
+  }
+```
