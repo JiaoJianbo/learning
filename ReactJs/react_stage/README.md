@@ -24,9 +24,6 @@
 4. 启动项目，`npm start`
 
 
-SPA (Single Page Application)
-
-
 ## 1.3 功能界面的组件化编码流程
 
 1. 拆分组件：拆分界面，抽取组件
@@ -188,3 +185,90 @@ module.exports = function(app) {
     PubSub.publish('search', { err: error.message, isLoading: false });
   }
 ```
+
+# React 路由
+
+## 相关理解
+
+### SPA 的理解
+1. 单页 Web 应用 (Single Page Application, SPA)
+2. 整个应用只有**一个完整的页面**
+3. 点击页面中的链接不会刷新页面，只会做页面的**局部更新**
+4. 数据都要通过 Ajax 请求获取，并在前端异步展现
+
+### 路由的理解
+1. 什么是路由？
+  - 一个路由就是一个映射关系（key:value）
+  - key 为路径，value 可能是 function 或 component 
+2. 路由分类
+  - 后端路由
+    - 1). 理解：value 是 function，用来处理客户端提交的请求
+    - 2). 注册路由：router.get(path, function(req, res))
+    - 3). 工作过程：当 node 接收到一个请求时，根据请求路径找到匹配的路由，调用路由中的函数来处理请求，返回响应数据
+
+  - 前端路由
+    - 1). 浏览器端路由：value 是 component，用于展示页面内容
+    - 2). 注册路由：<Router path="/test" component={Test}/>
+    - 3). 工作过程：当浏览器的 path 变为 /test 时，当前路由组件就变为 Test 组件
+
+### react-router 的理解
+1. React 的一个插件库 （基于 web 的 react-router-dom, native, anywhere）
+2. 专门用来实现一个 SPA 应用
+3. 基于 React 的项目基本都会用到此库
+
+### react-router 相关 API
+
+#### 内置组件
+1. <BrowserRouter>
+2. <HashRouter>
+3. <Route>
+4. <Redirect>
+5. <Link>
+6. <NavLink>
+7. <Switch>
+
+#### 准备
+1. 下载 react-router-dom, `npm i --save react-router-dom`
+2. 引入 bootstrap.css, `<link href="%PUBLIC_URL%/css/bootstrap.css" rel="stylesheet">`
+
+### 路由的基本使用
+1. 明确好界面中的导航区，展示区
+2. 导航区的 a 标签改为 Link 标签。`<Link to='/xxx'>Demo</Link>`
+3. 展示区写 Route 标签进行路径匹配。`<Route path='/xxx' component={Demo}/>`
+4. App 外侧包裹一个 `<BrowserRouter>` 或 `<HashrRouter>`
+
+### 路由组件与一般组件
+1. 写法不同
+  - 一般组件： <Demo/>
+  - 路由组件： <Route path='/demo' component={Demo}/>
+2. 存放位置不同
+  - 一般组件： components
+  - 路由组件： pages
+3. 接收到的 props 不同
+  - 一般组件： 写组件标签时，传递了什么就能收到什么
+  - 路由组件： 接收到三个固定的属性。history, location, match。注意：高版本（18）路由组件写法变化，与一般组件一样了，传递什么，才能接收到什么
+  ```
+  history:
+    go: f go(n)
+    goBack: f goBack()
+    goForward: f goForward()
+    push: f push(path, state)
+    replace: f replace(path, state)
+  location:
+    hash: ""
+    key: "znwrid"
+    pathname: "/about"
+    search: ""
+    state: undefined
+  match:
+    isExact: true
+    params: {}
+    path: "/about"
+    url: "/about"
+  ```
+
+### NavLink 与封装 NavLink
+1. NavLink 可以实现路由链接高亮，（低版本中）通过 `activeClassName` 指定样式名
+2. 标签体内容是一个特殊的标签属性
+3. 通过 `this.props.children` 可以获取标签体内容
+

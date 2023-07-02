@@ -1,34 +1,30 @@
 import React, { Component } from 'react'
-import {NavLink, Routes, Route} from 'react-router-dom'
-import Header from './components/Header' // 一般组件
-import About from './pages/About/About' // 路由组件
-import Home from './pages/Home/Home' // 路由组件
-import MyNavLink from './components/MyNavLink'
+import About from './components/About'
+import Home from './components/Home/Home'
+import {Link, Routes, Route} from 'react-router-dom'
 
 export default class App extends Component {
 
   render() {
     return (
       <div>
-          
           <div className="row">
             <div className="col-xs-offset-2 col-xs-8">
-              <Header />
+              <div className="page-header"><h2>React Router Demo</h2></div>
             </div>
           </div>
 
           <div className="row">
             <div className="col-xs-offset-2 col-xs-2">
               <div className="list-group">
-                {/* 自定义 Active 时的样式，默认就是 active, 低版本的写法 */}
-                {/* <NavLink activeClassName="atguigu" className="list-group-item" to="/about">About</NavLink> */}
+                {/* 原生 html 中用 <a> 跳转不同链接 */}
+                {/* <a href="" className="list-group-item">About</a>
+                <a href="" className="list-group-item">Home</a> */}
 
-                {/* 高版本的写法 */}
-                <NavLink className={({isActive}) => "list-group-item " + (isActive? "atguigu" : "")} to="/about">About</NavLink>
-                <NavLink className="list-group-item" to="/home">Home</NavLink>
-                {/* 标签体的值被绑定在了 props.children 上 */}
-                <MyNavLink to="/about">About</MyNavLink>
-                <MyNavLink to="/home">Home</MyNavLink>
+                {/* React 中用路由链接实现切换组件 --编写路由链接 */}
+                  <Link className="list-group-item" to="/about">About</Link>
+                  <Link className="list-group-item" to="/home">Home</Link>
+ 
               </div>
             </div>
             <div className="col-xs-6">
