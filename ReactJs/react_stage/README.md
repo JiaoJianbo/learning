@@ -272,3 +272,36 @@ module.exports = function(app) {
 2. 标签体内容是一个特殊的标签属性
 3. 通过 `this.props.children` 可以获取标签体内容
 
+### Switch 的使用
+1. 通常情况下，path 和 component 是一一对应的关系
+2. Switch 可以提高路由匹配效率（单一匹配）
+3. 高版本中没有 Switch，已经解决了同时匹配多个组件的问题
+
+### 解决多级路径刷新页面样式丢失的问题
+1. public/index.html 中引入样式时不写 ./ 写 / (常用)
+2. public/index.html 中引入样式时不写 ./ 写 %PUBLIC_URL% (常用)
+3. 使用 HashRouter
+
+### 路由的严格匹配与模糊匹配
+1. 默认的使用的是模糊匹配（v6以前），简单记，输入的路径必须包含匹配的路径，且 输入路径.startWith(匹配的路径)
+2. 开启严格匹配：`<Route exact={true} path='/home' component={Home}/>`
+3. 严格匹配不要随便开启，需要时再开，有些时候开启会导致无法继续匹配二级路由
+
+### Redirect 的使用
+1. 一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到 Redirect 指定的路由
+2. 具体写法
+  ```javascript
+    // V6 以前的写法
+    <Switch>
+      <Route path='/home' component={Home}/>
+      <Route path='/about' component={About}/>
+      <Redirect to="/home" />
+    </Switch>
+
+    // V6 的写法
+    <Routes>
+      <Route path='/about' element={<About/>}/>
+      <Route path='/home' element={<Home/>}/>
+      <Route path='*' element={<Navigate to="/home"/>} />
+    </Routes>
+  ```

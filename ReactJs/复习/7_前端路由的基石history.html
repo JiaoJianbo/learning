@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7_前端路由的基石history</title>
+
+</head>
+<body>
+    <!-- 注意： 此例必须借助 live server 运行打开，不能直接用双击浏览器运行 -->
+
+    <a href="http://www.atguigu.com" onclick="return push('/test1');">push test1</a> <br><br>
+    <button onclick="push('/test2')">push test2</button><br><br>
+    <button onclick="replace('/test3')">replace test3</button><br><br>
+    <button onclick="back()"> &lt;=back</button>
+    <button onclick="forward()">forward=&gt;</button><br><br>
+    
+    <!-- 借助下面的库操作 history 比较方便 -->
+    <script type="text/javascript" src="https://cdn.bootcss.com/history/4.7.2/history.js"></script>
+    <script type="text/javascript">
+        let history = History.createBrowserHistory(); // 方法一：直接使用 H5 推出的 history 自身的 API
+        // let history = History.creatHashHistory(); // 方法二：hash 值（锚点），兼容性比较好
+
+        function push(path) {
+            history.push(path);
+            return false
+        }
+
+        function replace(path) {
+            history.replace(path);
+            return false;
+        }
+
+
+        function back() {
+            history.goBack();
+        }
+
+
+        function forward() {
+            history.goForward();
+        }
+
+
+        history.listen(location => {
+            console.log('请求路径变化了', location);
+        });
+    </script>
+</body>
+</html>
