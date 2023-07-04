@@ -305,3 +305,7 @@ module.exports = function(app) {
       <Route path='*' element={<Navigate to="/home"/>} />
     </Routes>
   ```
+
+### 嵌套路由
+1. 注册子路由时要写上父路由的 path 值（V6 以前）
+2. 路由的匹配是按照注册路由的顺序进行的
