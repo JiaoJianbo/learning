@@ -31,8 +31,8 @@ export default class App extends Component {
                   {/* 注册路由 */}
                   {/* 高版本的写法 */}
                   <Routes>
-                    <Route path='/about/*' element={<About/>}/>
                     {/* exact=true 表示精确匹配，低版本默认模糊匹配，但是高版本（v6）默认就是精确匹配 */}
+                    <Route path='/about/*' element={<About/>}/>
                     <Route path='/home/*' element={<Home/>}/>
 
                     {/* 低版本用重定向 */}

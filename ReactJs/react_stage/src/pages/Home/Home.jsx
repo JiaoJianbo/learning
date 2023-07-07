@@ -25,10 +25,10 @@ export default class Home extends Component {
             <Route path='/home/message' component={Message}/>
           </Switch> */}
 
-          {/* V6 的写法, 不需要一级路由 /home/ 了 */}
+          {/* V6 的写法, 不需要一级路由 /home/ 了,如果有子路由，后面要* */}
           <Routes>
-            <Route path='news' element={<News/>}/>
-            <Route path='message' element={<Message/>}/>
+            <Route path='news/*' element={<News/>}/>
+            <Route path='message/*' element={<Message/>}/>
 
             <Route path='*' element={<Navigate to="news"/>}/>
           </Routes>

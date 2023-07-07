@@ -309,3 +309,16 @@ module.exports = function(app) {
 ### 嵌套路由
 1. 注册子路由时要写上父路由的 path 值（V6 以前）
 2. 路由的匹配是按照注册路由的顺序进行的
+
+### 向路由传递参数
+1. params 参数 
+  - V6 以前的做法
+    路由链接（携带参数）：`<Link to={`/demo/test/tom/18`}>详情</Link>`
+    注册路由（声明接收）：`<Route path="/demo/test/:name/:age" component={Test} />`
+    接收参数：`const {name, age} = this.props.match.params`
+
+  - V6 的做法
+    路由链接（携带参数）：`<Link to={`test/tom/18`}>详情</Link>`
+    注册路由（声明接收）：`<Route path='test/:name/:age' element={<Test/>}/>`
+    接收参数：使用 `useParams` hook, `const {name, age} = useParams();` **要特别注意**， `useParams` hook 只能用在函数式组件中。
+
