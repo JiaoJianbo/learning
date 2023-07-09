@@ -24,13 +24,7 @@ export default class Message extends Component {
                   {/* <Link to={`detail/${msgObj.id}/${msgObj.title}`}>{msgObj.title}</Link> */}
  
                   {/* 向路由组件传递 search 参数 */}
-                  {/* <Link to={`detail?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link> */}
-
-                  {/* 向路由组件传递 state 参数 */}
-                  {/* V6 以前写法 */}
-                  {/* <Link to={{pathname:'detail', state: {id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link> */}
-                  {/* V6 写法 */}
-                  <Link to='detail' state={{id:msgObj.id,title:msgObj.title}}>{msgObj.title}</Link>
+                  <Link to={`detail?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link>
                 </li>
               );
             })
@@ -46,9 +40,6 @@ export default class Message extends Component {
             {/* <Route path='detail/:id/:title' element={<Detail/>}/> */}
 
             {/* search 参数无需声明接收 */}
-            {/* <Route path='detail' element={<Detail/>}/> */}
-
-            {/* state 参数无需声明接收 */}
             <Route path='detail' element={<Detail/>}/>
           </Routes>
         </div>

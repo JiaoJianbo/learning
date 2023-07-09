@@ -1,19 +1,24 @@
 // import React, { Component } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+// import qs from 'querystring'
+import qs from 'qs'
 
 const data = [
   {id: "01", content: 'Hello World'},
   {id: "02", content: 'Hello China'},
   {id: "03", content: 'Hello My Love'}
 ];
+// 常用库 qs，原名 querystring
+let d1 = qs.stringify(data[0]); // URL encoding
+console.log('Detail@d1', d1);
+console.log('Detail@d1', qs.parse(d1));
 
-
-// V6 使用 useLocation hook, 只能用在函数式组件中
+// V6 使用 useSearchParams hook, 只能用在函数式组件中
 export default function Detail() {
-  console.log('Detail@useLocation', useLocation());
-  
-  const {state:{id, title}} = useLocation();
-  // console.log(id, title);
+  const [params] = useSearchParams();
+  console.log('Detail@useSearchParams', params);
+  const id = params.get('id');
+  let title = params.get('title');
 
   const findResult = data.find(detailObj => {
     return detailObj.id === id;

@@ -1,5 +1,5 @@
 // import React, { Component } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const data = [
   {id: "01", content: 'Hello World'},
@@ -7,13 +7,11 @@ const data = [
   {id: "03", content: 'Hello My Love'}
 ];
 
-
-// V6 使用 useLocation hook, 只能用在函数式组件中
+// V6 使用 useParams hook, 只能用在函数式组件中
 export default function Detail() {
-  console.log('Detail@useLocation', useLocation());
-  
-  const {state:{id, title}} = useLocation();
-  // console.log(id, title);
+  const params = useParams();
+  console.log('Detail@', params);
+  const {id, title} = params;
 
   const findResult = data.find(detailObj => {
     return detailObj.id === id;

@@ -322,3 +322,28 @@ module.exports = function(app) {
     注册路由（声明接收）：`<Route path='test/:name/:age' element={<Test/>}/>`
     接收参数：使用 `useParams` hook, `const {name, age} = useParams();` **要特别注意**， `useParams` hook 只能用在函数式组件中。
 
+2. 传递 search 参数
+  - V6 以前的做法
+    路由链接（携带参数）：`<Link to={`/demo/test?name=tom&age=18`}>详情</Link>`
+    注册路由（无需声明，正常注册即可）：`<Route path="/demo/test" component={Test} />`
+    接收参数：`const {search} = this.props.location`
+    备注：获取到的 search 是 urlEncoded 的字符串，需要借助 qs 解析
+
+  - V6 的做法
+    路由链接（携带参数）：`<Link to={`test?name=tom&age=18`}>详情</Link>`
+    注册路由（无需声明）：`<Route path='test' element={<Test/>}/>`
+    接收参数：使用 `useSearchParams` hook, `const [params] = useSearchParams(); const name = params.get('name');` **要特别注意**， `useSearchParams` hook 只能用在函数式组件中。
+
+3. 传递 state 参数
+  - V6 以前的做法
+    路由链接（携带参数）：`<Link to={{pathname:'detail', state: {id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link>`
+    注册路由（无需声明，正常注册即可）：`<Route path="/demo/test" component={Test} />`
+    接收参数：`const {search} = this.props.location`
+    备注：刷新也可以保留参数
+
+  - V6 的做法
+    路由链接（携带参数）：`<Link to='detail' state={{id:msgObj.id,title:msgObj.title}}>{msgObj.title}</Link>`, state 是一个单独的 property
+    注册路由（无需声明）：`<Route path='test' element={<Test/>}/>`
+    接收参数：使用 `useLocation` hook, `const name = useLocation().state.name` **要特别注意**， `useLocation` hook 只能用在函数式组件中。
+    备注：刷新也可以保留参数
+
