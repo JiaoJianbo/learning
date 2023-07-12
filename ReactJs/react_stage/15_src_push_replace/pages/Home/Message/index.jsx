@@ -30,7 +30,7 @@ export default class Message extends Component {
                   {/* V6 以前写法 */}
                   {/* <Link to={{pathname:'detail', state: {id:msgObj.id,title:msgObj.title}}}>{msgObj.title}</Link> */}
                   {/* V6 写法 */}
-                  <Link to='detail' state={{id:msgObj.id,title:msgObj.title}}>{msgObj.title}</Link>
+                  <Link to='detail' replace={false} state={{id:msgObj.id,title:msgObj.title}}>{msgObj.title}</Link>
                 </li>
               );
             })

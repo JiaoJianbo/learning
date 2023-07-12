@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import {Routes, Route, Navigate, NavLink} from 'react-router-dom'
-// --- V6 以前 ---
-// import Message from './Message'
-// --- V6 ---
-import Message from './Message/Message'
+import Message from './Message'
 import News from './News'
 
 export default class Home extends Component {
@@ -15,10 +12,10 @@ export default class Home extends Component {
           <ul className="nav nav-tabs">
             {/* V6 以前要按 News 的写法，V6 下面两种写法都可以。注意：去看看 App 中一级路由注册的写法 */}
             <li>
-              <NavLink className="list-group-item" to="/home/news">News</NavLink>
+              <NavLink replace className="list-group-item" to="/home/news">News</NavLink>
             </li>
             <li>
-              <NavLink className="list-group-item" to="message">Message</NavLink>
+              <NavLink replace className="list-group-item" to="message">Message</NavLink>
             </li>
           </ul>
           {/* 注册路由 */}

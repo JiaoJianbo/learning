@@ -25,7 +25,7 @@ export default class App extends Component {
                 <MyNavLink to="/home">Home</MyNavLink>
               </div>
             </div>
-            <div className="col-xs-8">
+            <div className="col-xs-6">
               <div className="panel">
                 <div className="panel-body">
                   {/* 注册路由 */}

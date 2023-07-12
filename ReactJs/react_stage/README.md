@@ -347,3 +347,16 @@ module.exports = function(app) {
     接收参数：使用 `useLocation` hook, `const name = useLocation().state.name` **要特别注意**， `useLocation` hook 只能用在函数式组件中。
     备注：刷新也可以保留参数
 
+### 编程式路由导航
+V6 以前借助 this.props.history 对象上的 API 对操作路由跳转，前进，后退
+```javascript
+this.props.history.push()
+this.props.history.replace()
+this.props.history.goBack()
+this.props.history.goForward()
+this.props.history.go()
+```
+V6 要借助 `useNavigate, useParams, useSearchParams, useLocation` 这几个 hook, 具体可以参考下面的链接：
+- [React路由使用步骤(含三种传参方式+编程式导航)](https://blog.csdn.net/weixin_68658847/article/details/130295502)
+- [2.React框架之函数组件路由及参数传递React-Router（V6）](https://blog.csdn.net/qq_44438941/article/details/129018373)
+
