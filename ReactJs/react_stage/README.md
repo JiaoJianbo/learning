@@ -246,8 +246,8 @@ module.exports = function(app) {
   - 路由组件： pages
 3. 接收到的 props 不同
   - 一般组件： 写组件标签时，传递了什么就能收到什么
-  - 路由组件： 接收到三个固定的属性。history, location, match。注意：高版本（18）路由组件写法变化，与一般组件一样了，传递什么，才能接收到什么
-  ```
+  - 路由组件： 接收到三个固定的属性。history, location, match。注意：V6版本路由组件写法变化，与一般组件一样了，传递什么，才能接收到什么
+  ```yaml
   history:
     go: f go(n)
     goBack: f goBack()
@@ -359,4 +359,22 @@ this.props.history.go()
 V6 要借助 `useNavigate, useParams, useSearchParams, useLocation` 这几个 hook, 具体可以参考下面的链接：
 - [React路由使用步骤(含三种传参方式+编程式导航)](https://blog.csdn.net/weixin_68658847/article/details/130295502)
 - [2.React框架之函数组件路由及参数传递React-Router（V6）](https://blog.csdn.net/qq_44438941/article/details/129018373)
+
+### withRouter 
+1. withRouter 可以加工一般组件，让一般组件具备路由组件所特有的 API
+2. withRouter 的返回值是一个新组件
+
+### BrowserRouter 和 HashRouter 的区别
+1. 底层原理不同
+- BrowserRouter 使用的是 H5 的 history API, 不兼容 IE9 及以下版本
+- HashRouter 使用的是 URL 的 hash 值
+2. path 表现形式不同
+- BrowserRouter 路径中没有 #，例如：localhost:3000/demo/test
+- HashRouter 路径中包含 #，例如：localhost:3000/#/demo/test
+3. 刷新后对路由 state 参数的影响
+- BrowserRouter 没有任何影响，因为 state 保存在 history 对象中
+- HashRouter 刷新后会导致 state 参数的丢失
+4. HashRouter 可以用于解决一些路径错误相关的问题
+
+
 
