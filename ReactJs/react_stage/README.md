@@ -8,7 +8,7 @@
 
 2. React 提供了一个用于创建 react 项目的脚手架库 create-react-app
 
-3. 项目的整体技术架构为 react + webpack + es6 + eslint
+3. 项目的整体技术架构为 react webpack es6 eslint
 
 4. 使用脚手架开发项目的特点：模块化，组件化，工程化
 
@@ -377,4 +377,54 @@ V6 要借助 `useNavigate, useParams, useSearchParams, useLocation` 这几个 ho
 4. HashRouter 可以用于解决一些路径错误相关的问题
 
 
+## React UI 组件库
+
+### 流行的开源 React UI 组件库
+1. material-ui (国外)
+  - 官网： [https://mui.com/material-ui/](https://mui.com/material-ui/)
+  - GitHub: [https://github.com/mui/material-ui](https://github.com/mui/material-ui)
+2. ant-design (国内蚂蚁金服)
+  - 官网： [https://ant.design/index-cn](https://ant.design/index-cn)
+  - GitHub: [https://github.com/ant-design/ant-design](https://github.com/ant-design/ant-design)
+3. Element UI
+  - 官网：[https://element.eleme.cn/#/zh-CN](https://element.eleme.cn/#/zh-CN)
+  - GitHub: [https://github.com/ElemeFE/element](https://github.com/ElemeFE/element)
+4. Vant UI
+  - 官网： [https://vant-contrib.gitee.io/vant/#/zh-CN/](https://vant-contrib.gitee.io/vant/#/zh-CN/)
+
+### antd(4.x) 的按需引入和自定义主题使用
+`npm run eject` 暴露 react 脚手架 webpack 的配置。注意：这一步骤不可逆，一旦暴露了，不能再隐藏。
+1. 安装依赖： react-app-rewired customize-cra babel-plugin-import less less-loader
+2. 修改 package.json
+  ```json
+  /* package.json */
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  }
+  ```
+3. 在根目录下创建`config-overrides.js`用于修改默认配置。
+```javascript
+  const { override, fixBabelImports } = require('customize-cra');
+
+  module.exports = override(
+    fixBabelImports('import', {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true,
+    }),
+    addLessLoader({
+      lessOptions: {
+        javascriptEnabled: true,
+        modifyVars: { '@primary-color': '#1DA57A' }
+      }
+    }),
+  );
+```
+4. 备注：不用在组件里亲自引入样式了，即：`import 'antd/dist/antd.css'`应该删掉
+
+
+###
 
