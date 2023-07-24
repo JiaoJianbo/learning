@@ -1,46 +1,53 @@
 import React, { Component } from 'react'
-// 引入 store 
-// import store from '../../redux/store'
+// 引入 store 用于获取保存在 store 中的 state
+import store from '../../redux/store'
+// 引入 actionCreator, 专门用于创建 action 对象
+import {createIncremantAction, createDecremantAction} from '../../redux/count_action'
 
 export default class index extends Component {
   
-  // 用了 react-redux 不用再自己监测 state 改变，容器组件已经具备监测能力
-  /* componentDidMount() {
+  componentDidMount() {
     // 监测到 redux 中的状态变化。只要变化，就调用 render
     store.subscribe(() => {
       this.setState({}); // 通过 setState() 间接调用 render 方法
     });
-  } */
+  }
 
   increment = () => {
     const {value} = this.selectNumber;
-    this.props.add(value*1);
+    // value*1 自动转成数值，否则为字符串拼接
+    // store.dispatch({type:'increment', data: value*1});
+    store.dispatch(createIncremantAction(value*1));
   }
 
   decrement = () => {
     const {value} = this.selectNumber;
-    this.props.decrement(value*1);
+    // store.dispatch({type:'decrement', data: value*1});
+    store.dispatch(createDecremantAction(value*1));
   }
 
   incrementIfOdd = () => {
     const {value} = this.selectNumber;
-    if(this.props.count % 2 !== 0) {
-      this.props.add(value*1);
+    const count = store.getState();
+    if(count % 2 !== 0) {
+      // store.dispatch({type:'increment', data: value*1});
+      store.dispatch(createIncremantAction(value*1));
     }
   }
 
   incrementAsync = () => {
     const {value} = this.selectNumber;
-    this.props.asyncAdd(value*1, 800);
+    setTimeout(()=>{
+      // store.dispatch({type:'increment', data: value*1});
+      store.dispatch(createIncremantAction(value*1));
+    }, 800);
   }
 
 
   render() {
-    console.log('CountUI@props:', this.props)
-
     return (
       <div>
-        <h2>当前求和为：{this.props.count}</h2>
+        <h2>当前求和为： {store.getState()}</h2>
 
         <select ref={c => this.selectNumber = c }>
             <option value="1">1</option>

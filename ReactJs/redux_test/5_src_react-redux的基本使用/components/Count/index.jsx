@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
 // 引入 store 
-// import store from '../../redux/store'
+import store from '../../redux/store'
 
 export default class index extends Component {
   
-  // 用了 react-redux 不用再自己监测 state 改变，容器组件已经具备监测能力
-  /* componentDidMount() {
+  componentDidMount() {
     // 监测到 redux 中的状态变化。只要变化，就调用 render
     store.subscribe(() => {
       this.setState({}); // 通过 setState() 间接调用 render 方法
     });
-  } */
+  }
 
   increment = () => {
     const {value} = this.selectNumber;
