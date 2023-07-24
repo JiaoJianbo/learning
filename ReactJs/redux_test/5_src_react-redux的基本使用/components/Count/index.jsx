@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // 引入 store 
 import store from '../../redux/store'
 
-export default class index extends Component {
+export default class Count extends Component {
   
   componentDidMount() {
     // 监测到 redux 中的状态变化。只要变化，就调用 render
