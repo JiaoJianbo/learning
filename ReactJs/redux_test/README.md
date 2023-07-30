@@ -1,4 +1,4 @@
-#
+# redux
 
 
 ## redux
@@ -147,3 +147,7 @@
   - 4) react-redux 中的 connect 函数
 3. 作用：能实现更加动态，更加扩展的功能
 
+## 打包
+`npm run build`, 其实最终调用的是 `package.json` 中 "scripts" --> "build" 所对应的命令。
+打包好的文件要么部署到服务器上查看，或者安装一个全局的库，进行预览。`npm install -g serve`, `serve -s build`
+![build-serve](react-build-serve.png)
