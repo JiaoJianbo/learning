@@ -1,16 +1,7 @@
 /**
  * 该文件专门为 Count 组件生成 action 对象
  */
-import {INCREMENT, DECREMENT} from './constant'
-/* 
-function createIncremantAction(data) {
-    return {type:'increment', data};
-}
-
-function createDecremantAction(data) {
-    return {type:'decrement', data};
-}
-*/
+import {INCREMENT, DECREMENT} from '../constant'
 
 // 同步 Action,就是 action 的值为 Object 类型的一般对象
 export const createIncremantAction = data => ({type:INCREMENT, data})

@@ -78,7 +78,7 @@
   - 异步任务有结果后，分发给一个同步的 action 去真正操作数据。
   - 备注：异步 Action 不是必须要写的，完全可以自己等待异步任务的结果了再去分发给同步 Action
 
-### 求和案例 redux react-redux 基本使用
+### 求和案例 react-redux 基本使用
 安装 `npm install react-redux`
 1. 明确两个概念：
   - UI 组件：不能使用任何 redux 的 API，只负责页面的呈现，交互等等
@@ -92,7 +92,7 @@
 3. 备注：容器中的 store 靠的是 props 传进去的，而不是在容器组件中直接引入的
 4. 备注：mapDispatchToProps 也可以简写为一个对象
 
-### 求和案例 redux react-redux 优化
+### 求和案例 react-redux 优化
 1. 容器组件和 UI 组件整合成一个文件
 2. 无需自己给容器组件传递 store，给 `<App/>` 包裹 `<Provider store={store}> </Provider>` 即可
 3. 使用 react-redux 后也不用自己再监测 redux 中状态的改变了，容器组件可以自动完成这个工作
@@ -107,6 +107,43 @@
     )(UI组件)
     ```
     3). 在组件中通过 `this.props.xxxxxx` 读取和操作状态
+
+### 求和案例 react-redux 数据共享版
+1. 定义一个 Person 组件，一个 Count 组件通过 redux 进行数据共享
+2. 为 Person 组件编写 reducer, action, 配额 constant 常量
+3. 重点：Person 的 reducer 和 Count 的 reducer 要使用 `combineReducers` 进行合并，合并后的总状态是一个对象
+4. 交给 store 的是总的 reducer，最后注意在组件取出状态的时候，记得“取到位”
+
+### 求和案例 react-redux 开发者工具的使用
+1. 安装浏览器插件 Redux DevTools，以及 `npm i --save-dev redux-devtools-extension` 配合浏览器插件使用
+2. 在 store 中进行配置：
+  - 1) `import {composeWithDevTools} from 'redux-devtools-extension'`
+  - 2) `export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk)));`
+3. Chrome 浏览器插件图
+  ![Chrome-Redux-devtools](redux-devtools.png)
+
+## 高阶函数和纯函数
+
+### 纯函数
+1. 一个特别的函数，只要是同样的输入（实参），必定得到同样的输出（返回）
+2. 必须遵守以下的一些约束：
+  - 1) 不得改写参数数据
+  - 2) 不会产生任何副作用，例如网络请求，输入和输出设备
+  - 3) 不能调用 `Date.now()` 或者 `Math.random()` 等不纯的函数
+3. redux 的 reducer 函数必须是一个纯函数
+
+### 高阶函数
+1. 理解：一类特别的函数：
+  - 1) 参数是函数
+  - 2) 返回是函数
+2. 常见的高阶函数：
+  - 1) 定时器设置函数
+  - 2) 数组的 forEach/map/filter/reduce/find/bind
+  - 3) promise
+  - 4) react-redux 中的 connect 函数
+3. 作用：能实现更加动态，更加扩展的功能
+
+
 
 
 

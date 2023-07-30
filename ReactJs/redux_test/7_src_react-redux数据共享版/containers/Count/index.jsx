@@ -56,7 +56,7 @@ class Count extends Component {
 
 
 export default connect(
-    state => ({count:state.sum, renshu: state.persons.length}), // 这里的 state 是放在 store 里面的总的 state
+    state => ({count:state.sum, renshu: state.rens.length}), // 这里的 state 是放在 store 里面的总的 state
     {
         add: createIncremantAction,
         decrement: createDecremantAction,

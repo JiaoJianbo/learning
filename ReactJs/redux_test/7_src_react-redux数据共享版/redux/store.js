@@ -10,14 +10,11 @@ import thunk from 'redux-thunk'
 import countReducer from './reducers/count'
 // 引入为 Person 组件服务的 reducer
 import personReducer from './reducers/person'
-// 引入 redux-devtools-extension
-import {composeWithDevTools} from 'redux-devtools-extension'
 
 // 汇总所有 reducer 变为一个总的 reducer
 const allReducer = combineReducers({
     sum: countReducer,
-    persons: personReducer
+    rens: personReducer
 });
 
-// export default createStore(allReducer, applyMiddleware(thunk));
-export default createStore(allReducer, composeWithDevTools(applyMiddleware(thunk)));
+export default createStore(allReducer, applyMiddleware(thunk));
