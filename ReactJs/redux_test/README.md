@@ -122,6 +122,10 @@
 3. Chrome 浏览器插件图
   ![Chrome-Redux-devtools](redux-devtools.png)
 
+### 求和案例 react-redux 最终版
+1. 所有变量名要规范，尽量触发对象的简写形式
+2. reducers 文件夹中，添加 index.js 专门用于汇总并暴露所有的 reducer
+
 ## 高阶函数和纯函数
 
 ### 纯函数
@@ -142,8 +146,4 @@
   - 3) promise
   - 4) react-redux 中的 connect 函数
 3. 作用：能实现更加动态，更加扩展的功能
-
-
-
-
 
