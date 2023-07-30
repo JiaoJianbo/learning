@@ -219,6 +219,7 @@ module.exports = function(app) {
 ### react-router 相关 API
 
 #### 内置组件
+```
 1. <BrowserRouter>
 2. <HashRouter>
 3. <Route>
@@ -226,6 +227,7 @@ module.exports = function(app) {
 5. <Link>
 6. <NavLink>
 7. <Switch>
+```
 
 #### 准备
 1. 下载 react-router-dom, `npm i --save react-router-dom`
@@ -239,8 +241,8 @@ module.exports = function(app) {
 
 ### 路由组件与一般组件
 1. 写法不同
-  - 一般组件： <Demo/>
-  - 路由组件： <Route path='/demo' component={Demo}/>
+  - 一般组件： `<Demo/>`
+  - 路由组件： `<Route path='/demo' component={Demo}/>`
 2. 存放位置不同
   - 一般组件： components
   - 路由组件： pages
