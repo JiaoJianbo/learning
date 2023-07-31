@@ -54,5 +54,24 @@ const Login = lazy(()=>import ('@/pages/Login'))
   - setXxx(newValue): 参数为非函数值，直接指定新的状态值，内部用其覆盖原来的状态值
   - setXxx(value => newValue): 参数为函数，接收原来的状态值，返回新的状态值，内部用其覆盖原来的状态值
   
+### Effect Hook
+1. Effect Hook 可以让你在函数组件中执行副作用操作（用于模拟类组件中的生命周期钩子）
+2. React 中的副作用操作：
+  - 发 Ajax 请求获取数据
+  - 设置订阅/启动定时器
+  - 手动更改真实 DOM
+3. 语法和说明
+```javascript
+  useEffect(() => {
+    // 在此可以执行任何带副作用的操作
 
+    return () => { // 在组件卸载前执行
+      // 在此做一些收尾工作，如清除定时器/取消订阅等
+    }
+  }, [stateValue]); // 如果指定的是[]，回调函数只会在第一次 render() 之后执行
+```
+4. 可以把 useEffect 看作下面三个函数的组合
+  - `componentDidMount()`
+  - `componentDidUpdate()`
+  - `componentWillUnmount()`
 
