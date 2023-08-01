@@ -33,13 +33,22 @@ function Demo() {
         
     }
 
+    const myRef = React.useRef();
+
+    function show() {
+        alert(myRef.current.value)
+    }
+
+
     return (<div>
         <h2>当前求和为： {count}</h2>
         <button onClick={add}>点我+1</button>
         {/* <h2>当前名字为： {name}</h2>
         <button onClick={changeName}>点我改名</button> */}
-
-        <button onClick={unmount}>卸载组件</button>
+        <button onClick={unmount}>卸载组件</button> 
+        <br/><br/>
+        <input type="text" ref={myRef}/>
+        <button onClick={show}>点击显示数据</button>
     </div>);
 }
 

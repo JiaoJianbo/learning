@@ -75,3 +75,42 @@ const Login = lazy(()=>import ('@/pages/Login'))
   - `componentDidUpdate()`
   - `componentWillUnmount()`
 
+### Ref Hook
+1. Ref Hook 可以在函数组件中存储/查找组件内的标签或任意其他数据
+2. 语法：`const refContainer = React.useRef();`
+3. 作用：保存标签对象，功能与 React.createRef() 一样
+
+## 4. Fragment
+1. 用法 `<Fragment>...</Fragment>`，可以有一个 key 属性
+2. 可以不用必须有一个真实的 DOM 根标签。React 解析时，会自动舍弃这个标签，只保留里面的内容
+
+## 5. Context
+一种组件通信方式，常用于“祖组件”与“后代组件”间通信
+### 使用
+1. 创建 Context 容器对象
+```javascript
+const XxxContext = React.createContext();
+```
+2. 渲染子组件时，外面包裹 `xxxContext.Provider`，通过 value 属性给后代组件传递数据
+```javascript
+<xxxContext.Provider value={数据}>
+  // 子组件
+</xxxContext.Provider>
+```
+3. “后代组件”读取数据
+```javascript
+// 第一种方式，仅适用于类式组件
+static contextType = xxxContext; // 声明接收 context
+this.context // 读取 context 中的 value
+
+// 第二种方式，函数组件与类式组件都可以
+<xxxContext.Consumer>
+  {
+    value => ( // value 就是 context 中的 value 数据
+      // 要显示的内容
+    )
+  }
+</xxxContext.Consumer>
+```
+
+

@@ -1,8 +1,7 @@
 import React, { Component, lazy, Suspense } from 'react'
+import {NavLink, Routes, Route} from 'react-router-dom'
 // import About from './About'
 // import Home from './Home'
-
-import {NavLink, Routes, Route} from 'react-router-dom'
 
 // lazy load 
 const About = lazy(() => import ('./About'));
