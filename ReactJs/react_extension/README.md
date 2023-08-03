@@ -85,17 +85,18 @@ const Login = lazy(()=>import ('@/pages/Login'))
 2. 可以不用必须有一个真实的 DOM 根标签。React 解析时，会自动舍弃这个标签，只保留里面的内容
 
 ## 5. Context
+### 理解
 一种组件通信方式，常用于“祖组件”与“后代组件”间通信
 ### 使用
 1. 创建 Context 容器对象
 ```javascript
 const XxxContext = React.createContext();
 ```
-2. 渲染子组件时，外面包裹 `xxxContext.Provider`，通过 value 属性给后代组件传递数据
+2. 渲染子组件时，外面包裹 `XxxContext.Provider`，通过 **value** 属性给后代组件传递数据
 ```javascript
-<xxxContext.Provider value={数据}>
+<XxxContext.Provider value={数据}>
   // 子组件
-</xxxContext.Provider>
+</XxxContext.Provider>
 ```
 3. “后代组件”读取数据
 ```javascript
@@ -104,13 +105,16 @@ static contextType = xxxContext; // 声明接收 context
 this.context // 读取 context 中的 value
 
 // 第二种方式，函数组件与类式组件都可以
-<xxxContext.Consumer>
+<XxxContext.Consumer>
   {
     value => ( // value 就是 context 中的 value 数据
       // 要显示的内容
     )
   }
-</xxxContext.Consumer>
+</XxxContext.Consumer>
 ```
+### 注意
+在一用开发中一般不用 context, 一般都用它的封装 react 插件
 
+## 6. 组件优化
 
