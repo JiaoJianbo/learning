@@ -1,12 +1,10 @@
 import React from 'react'
-import { NavLink, useRoutes, useInRouterContext } from 'react-router-dom';
+import { NavLink, useRoutes } from 'react-router-dom';
 import routes from './routes'
 
 export default function App() {
   // 根据路由表生成对应的规则
   const element = useRoutes(routes);
-
-  console.log('useInRouterContext', useInRouterContext());
 
   return (
     <div>

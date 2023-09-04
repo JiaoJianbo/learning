@@ -1,10 +1,7 @@
 import React from 'react'
-import { NavLink, Outlet, useInRouterContext, useOutlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 export default function Home() {
-  console.log('useInRouterContext@Home', useInRouterContext());
-  console.log('useOutlet@Home', useOutlet());
-  
   return (
     <div>
       <h3>我是 Home 的内容</h3>

@@ -26,11 +26,11 @@ export default [{
             element: <Detail/>
           }
         ]
-      }/* ,
+      },
       {
         path: '',
         element: <Navigate to="news"/>
-      } */
+      }
     ]
   },
   {

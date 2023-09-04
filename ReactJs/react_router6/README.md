@@ -16,6 +16,12 @@
 
 ## Component
 
+### 1. <BrowserRouter>
+
+### 2. <HashRouter>
+1. 说明：作用与 `<BrowserRouter>` 一样，但 `<HashRouter>` 修改的是地址栏的 hash 值
+2. 备注：6.x 版本中 `<BrowserRouter>`，`<HashRouter>` 用法与 5.x 中一样
+
 ### 3. <Routes> 与 <Route>
 1. V6 版本中移除了先前的 `<Switch>`，引入了新的替代者 `<Routes>`
 2. `<Routes>` 与 `<Route>` 要配合使用，且必须用`<Routes>` 包裹 `<Route>`
@@ -43,6 +49,37 @@
 </Routes>
 ```
 
+### 4. <Link>
+1. 作用：修改 URL，且不发送网络请求（路由链接）
+2. 注意：外侧需要用 `<BrowserRouter>`或`<HashRouter>` 包裹
+3. 示例代码
+```javascript
+import { Link } from 'react-router-dom'
+
+function Test() {
+  return(
+    <div>
+      <Link to='/test'>按钮</Link>
+    </div>
+  );
+}
+```
+
+### 5. <NavLink>
+1. 作用：与 `<Link>` 组件类似，且可以实现导航的“高亮”效果
+2. 示例代码
+```javascript
+// NavLink 默认的类名就是 active，下面是自定义的 class
+
+<NavLink className={({isActive}) => isActive ? "list-group-item my-active" : "list-group-item"} to="/about">About</NavLink>
+
+/*
+ 默认情况下，当 Home 的子组件匹配成功，Home 的导航也会高亮
+ 但是当 NavLink 加上 end 属性后，若 Home 的子组件匹配成功，Home 的导航不会有高亮效果
+*/
+<NavLink to="/home" end>Home</NavLink>
+```
+
 ### 6. <Navigate>
 1. 作用： 只要组件`<Navigate>`被渲染，就会修改路径，切换视图
 2. `replace` 属性用于控制跳转模式（push 或者 replace，默认是 push）
@@ -63,6 +100,55 @@ export default function Home() {
 }
 ```
 
+### 7. <Outlet>
+1. 当 `<Route>` 产生嵌套时，渲染其对应的后续子路由
+2. 示例代码
+```javascript
+const element = useRoutes([{
+    path: '/about',
+    element: <About/>
+  },
+  {
+    path: '/home',
+    element: <Home/>,
+    children: [
+      {
+        path: 'news',
+        element: <News/>
+      },
+      {
+        path: 'messages',
+        element: <Messages/>
+      }
+    ]
+  }
+]);
+
+
+// Home.js
+import React from 'react'
+import { NavLink, Outlet } from 'react-router-dom';
+
+export default function Home() {
+  return (
+    <div>
+      <h3>我是 Home 的内容</h3>
+      <div>
+        <ul className="nav nav-tabs">
+          <li>
+            <NavLink className="list-group-item" to="news">News</NavLink>
+          </li>
+          <li>
+            <NavLink className="list-group-item" to="messages">Messages</NavLink>
+          </li>
+        </ul>
+        {/* 指定路由组件呈现的位置 */}
+        <Outlet/>
+      </div>
+    </div>
+  )
+}
+```
 
 ## Hooks
 
@@ -70,3 +156,37 @@ export default function Home() {
 
 
 ### useParams
+
+
+### useMatch
+
+
+### useSearchParams
+
+
+### useLocation
+
+
+### useNavigate
+
+
+### useInRouterContext()
+作用：如果组件在 `<Router>` 的上下文中呈现，则 `useInRouterContext` 钩子返回 true, 否则返回 false.
+
+### useNavigationType()
+作用：返回当前的导航类型（用户是如何来到当前页面的）
+返回值：`POP`, `PUSH`, `REPLACE`
+备注：`POP` 是指在浏览器中直接打开了这个路由组件（刷新页面）
+
+### useOutlet()
+作用：用来呈现当前组件中要渲染的嵌套路由
+示例代码
+```javascript
+const result = useOutlet();
+// 如果嵌套路由没有挂载，则 result 为null
+// 如果嵌套路由已经挂载，则展示嵌套的路由对象
+console.log(result);
+```
+
+### useResolvedPath()
+作用：给定一个 URL 值，解析其中的 path, search, hash 值
