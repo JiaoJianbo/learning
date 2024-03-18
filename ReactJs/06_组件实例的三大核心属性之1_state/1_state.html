@@ -20,8 +20,10 @@
           super(props);
           this.state = {isHot:true, wind:'微风'};
 
+          //使用 bind 方法会新生成一个新的方法
           //为 Weather 实例对象绑定一个属性，指向原型对象上的 changeWeather 方法。这种方式解决 this 指向
           this.changeWeather = this.changeWeather.bind(this);
+          //this.demo = this.changeWeather.bind(this);
         }
 
         changeWeather(){
@@ -38,8 +40,6 @@
           // state 更改必须通过 setState 方法，且更新是合并，并不是替换
           this.setState({isHot: !isHot}); 
           console.info(this.state.isHot);
-  
-  
         }
 
         render() {
@@ -47,6 +47,7 @@
           const {isHot,wind} = this.state;
           /* 在点击时，这里的 changeWeather 并不是通过实例调用的，所以方法里的this 并不是 weather 对象 */
           return <h1 id="title" onClick={this.changeWeather}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1>
+          {/* return <h1 id="title" onClick={this.demo}>今天天气很{isHot ? '炎热' : '凉爽'}，{wind}</h1> */}
         }
       }
 
