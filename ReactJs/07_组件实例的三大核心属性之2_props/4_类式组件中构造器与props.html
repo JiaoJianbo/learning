@@ -21,6 +21,7 @@
       /* 在 React 组件挂载之前，会调用它的构造函数。在为 React.Component 子类实现构造函数时，应在其他语句之前调用 
       super.(props)。否则，this.props 在构造函数中可能出现未定义（undefined）的 bug */
       // 构造器是否接收 props，是否传给 super()，取决于是否需要在构造器中通过 this 访问 props。 如果不需要，都不需要写构造器
+      // 在 React 中，构造器仅用于两种情况：1）通过 this.state 赋值对象来初始化内部 state。2）为事件处理函数绑定实例。
       constructor(props) {
         // console.log(props);
         //super();

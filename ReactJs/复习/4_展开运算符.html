@@ -26,8 +26,9 @@
         console.info(sum(1,2,3,4,5,6,7,8,9,10 ));
 
         // 构造字面量对象时使用展开语法
+        // MDN 文档：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax#%E6%9E%84%E9%80%A0%E5%AD%97%E9%9D%A2%E9%87%8F%E6%95%B0%E7%BB%84%E6%97%B6%E4%BD%BF%E7%94%A8%E5%B1%95%E5%BC%80%E8%AF%AD%E6%B3%95
         let person = {name: "Tom", age: 18};
-        // console.info(...person); //不能展开对象
+        // console.info(...person); //不能展开对象，但是在对象外面再包 {} 是可以的。另外 babel 里面也可以，但是限用于标签传值时
         let person2 = {...person}; //深拷贝对象
         person.name = 'Jerry';
         console.log(person);

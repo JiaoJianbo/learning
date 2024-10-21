@@ -22,7 +22,7 @@
     class Person extends React.Component {
       render(){
         // console.info(this);
-        // props 是只读的
+        // props 是只读的，下面的代码会报错
         // this.props.name = "Rose";
         const {name, gender, age} = this.props;
         return (
@@ -35,10 +35,12 @@
       }
     }
 
+    // 对标签属性进行类型、必要性限制
     Person.propTypes = {
       name: PropTypes.string.isRequired,
       gender:PropTypes.string,
       age: PropTypes.number
+      // 函数类型: PropTypes.func
     }
     // 指定默认标签属性值
     Person.defaultProps = {
